@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Development Roadmap </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Development Roadmap ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="development-roadmap">Development Roadmap</h1>
+
+<h2 id="0400">0.4.0.0</h2>
+<p>This release will focus on improving the user experience in the GUI.</p>
+<h2 id="04x0--1000">0.4.X.0 / 1.0.0.0</h2>
+<p>These releases will likely focus on preparing to release a premium version.</p>
+<ul>
+<li>Remove native dependencies
+<ul>
+<li>Replace crunch with managed code</li>
+<li>Implement support for decoding Bc textures with managed code for non-multiples of 4</li>
+</ul>
+</li>
+<li>Make all dependencies trimmable</li>
+<li>Nuget feed for forked dependencies</li>
+<li>NativeAOT compilation for better performance while loading and extracting</li>
+</ul>
+<h2 id="planned-but-unscheduled">Planned But Unscheduled</h2>
+<ul>
+<li>Import
+<ul>
+<li>Script Import
+<ul>
+<li>Use type trees for assembly reconstruction</li>
+</ul>
+</li>
+<li>Asset Loading
+<ul>
+<li>Extract assets and save to disk for lower ram usage</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Export
+<ul>
+<li>Script Export
+<ul>
+<li>Assembly renaming</li>
+</ul>
+</li>
+<li>Audio Export
+<ul>
+<li>WWise audio extraction</li>
+</ul>
+</li>
+<li>Shader Export
+<ul>
+<li>Replace all shaders on materials with a built-in shader (for example, the Standard shader)</li>
+</ul>
+</li>
+<li>Miscellaneous Export
+<ul>
+<li>Copy plugins folder into output</li>
+</ul>
+</li>
+<li>Selective Export
+<ul>
+<li>Export Selected object to folder</li>
+<li>Export Selected object to compressed zip file</li>
+</ul>
+</li>
+<li>Primary Content Extraction</li>
+<li>Binary Export
+<ul>
+<li>SerializeFile writing as an alternative to yaml export.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>UI
+<ul>
+<li>Improved Asset previews
+<ul>
+<li>Preview decompiled scripts</li>
+<li>Add a Mesh preview</li>
+<li>Scene preview</li>
+<li>Add a Material preview</li>
+</ul>
+</li>
+<li>Preferences window</li>
+</ul>
+</li>
+<li>Asset editing</li>
+</ul>
+<h2 id="concept-ideas">Concept Ideas</h2>
+<blockquote>
+<p>Note: This is just a collection of ideas. These might not be desirable or feasible, so many of them might never be implemented. Do not interpret their inclusion here as any form of commitment.</p>
+</blockquote>
+<ul>
+<li>GUI quality of life features
+<ul>
+<li>Font setting</li>
+<li>Configurable keybindings</li>
+</ul>
+</li>
+<li>Console
+<ul>
+<li>Enterable commands</li>
+</ul>
+</li>
+<li>Find all references</li>
+<li>Search Window
+<ul>
+<li>Dedicated window</li>
+<li>Filters for various asset types</li>
+<li>Filters for files</li>
+<li>Might be redundant due to tree view search</li>
+</ul>
+</li>
+<li>Tree View Search
+<ul>
+<li>Filters for various asset types</li>
+<li>Name filter</li>
+<li>Rows limit</li>
+<li>Result count</li>
+<li>Option to group resources</li>
+</ul>
+</li>
+<li>Tabs
+<ul>
+<li>Inspector Tab
+<ul>
+<li>Tag</li>
+<li>Layer</li>
+<li>ID</li>
+<li>File name</li>
+<li>Asset Specific Properties
+<ul>
+<li>Sortable</li>
+<li>Selectable with indepth description below</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Moveable Tabs</li>
+<li>Error Tab</li>
+</ul>
+</li>
+<li>Import Settings
+<ul>
+<li>Ignore scenes option</li>
+<li>Import bundle as level</li>
+<li>Assembly de-obfuscation</li>
+</ul>
+</li>
+<li>Performance Improvements
+<ul>
+<li>Asynchronous import/export</li>
+</ul>
+</li>
+<li>Filtered Export
+<ul>
+<li>Resources (png, wav, avi, obj, ...)</li>
+<li>Prefabs</li>
+<li>Scripts</li>
+</ul>
+</li>
+<li>Asset Bundle Construction
+<ul>
+<li>Editing and Repacking of games and asset bundles</li>
+<li>Asset Header Editor</li>
+<li>Asset Duplication and Creation</li>
+<li>Asset Editing and Replacement</li>
+<li>Copy and paste assets</li>
+<li>Prefab Creation</li>
+</ul>
+</li>
+<li>Asset Exporting
+<ul>
+<li>Export as Prefab</li>
+<li>Export as Unitypackage</li>
+<li>Node Dump</li>
+</ul>
+</li>
+<li>Asset Previews
+<ul>
+<li>Meshes
+<ul>
+<li>Colored semi-transparency</li>
+<li>Triangle count</li>
+<li>FPS meter</li>
+<li>Corner cube for orientation</li>
+<li>XYZ axis for orientation</li>
+<li>Toggle face cull</li>
+<li>Wireframe option</li>
+</ul>
+</li>
+<li>Textures
+<ul>
+<li>Background options (for example: checkers, white, black, default)</li>
+<li>Select the color channels to display
+<ul>
+<li>For example, disable the alpha channel</li>
+<li>Or show only the blue channel</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Video Display</li>
+<li>Animations</li>
+<li>Scripts
+<ul>
+<li>view as text</li>
+<li>notify if script missing</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/docs/articles/RoadMap.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

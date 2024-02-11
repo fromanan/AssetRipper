@@ -1,0 +1,579 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SerializedReader
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SerializedReader
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader">
+  
+  
+  <h1 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader" class="text-break">Class SerializedReader
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="AssetRipper.IO.Endian.EndianReader.html">EndianReader</a></div>
+    <div class="level2"><span class="xref">SerializedReader</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_EndianType">EndianReader.EndianType</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_IsAlignArray">EndianReader.IsAlignArray</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_BufferSize">EndianReader.BufferSize</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_RemainingStreamBytes">EndianReader.RemainingStreamBytes</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadChar">EndianReader.ReadChar()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt16">EndianReader.ReadInt16()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt16">EndianReader.ReadUInt16()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt32">EndianReader.ReadInt32()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt32">EndianReader.ReadUInt32()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt64">EndianReader.ReadInt64()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt64">EndianReader.ReadUInt64()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadHalf">EndianReader.ReadHalf()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadSingle">EndianReader.ReadSingle()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadDouble">EndianReader.ReadDouble()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadDecimal">EndianReader.ReadDecimal()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadString">EndianReader.ReadString()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadString_System_Int32_">EndianReader.ReadString(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadExactly_Span_System_Byte__">EndianReader.ReadExactly(Span&lt;Byte&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm">EndianReader.ReadStringZeroTerm()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm_System_Int32_System_String__">EndianReader.ReadStringZeroTerm(Int32, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadBooleanArray">EndianReader.ReadBooleanArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadBooleanArray_System_Boolean_">EndianReader.ReadBooleanArray(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadCharArray">EndianReader.ReadCharArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadCharArray_System_Boolean_">EndianReader.ReadCharArray(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadByteArray">EndianReader.ReadByteArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadByteArray_System_Boolean_">EndianReader.ReadByteArray(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadSByteArray">EndianReader.ReadSByteArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadSByteArray_System_Boolean_">EndianReader.ReadSByteArray(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt16Array">EndianReader.ReadInt16Array()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt16Array_System_Boolean_">EndianReader.ReadInt16Array(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt16Array">EndianReader.ReadUInt16Array()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt16Array_System_Boolean_">EndianReader.ReadUInt16Array(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt32Array">EndianReader.ReadInt32Array()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt32Array_System_Boolean_">EndianReader.ReadInt32Array(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt32Array">EndianReader.ReadUInt32Array()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt32Array_System_Boolean_">EndianReader.ReadUInt32Array(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt64Array">EndianReader.ReadInt64Array()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadInt64Array_System_Boolean_">EndianReader.ReadInt64Array(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt64Array">EndianReader.ReadUInt64Array()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadUInt64Array_System_Boolean_">EndianReader.ReadUInt64Array(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadSingleArray">EndianReader.ReadSingleArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadSingleArray_System_Boolean_">EndianReader.ReadSingleArray(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadDoubleArray">EndianReader.ReadDoubleArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadDoubleArray_System_Boolean_">EndianReader.ReadDoubleArray(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadStringArray">EndianReader.ReadStringArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadStringArray_System_Boolean_">EndianReader.ReadStringArray(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadEndian__1">EndianReader.ReadEndian&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadEndianArray__1">EndianReader.ReadEndianArray&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ReadEndianArrayArray__1">EndianReader.ReadEndianArrayArray&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_AlignStream">EndianReader.AlignStream()</a>
+    </div>
+    <div>
+      <a class="xref" href="AssetRipper.IO.Endian.EndianReader.html#AssetRipper_IO_Endian_EndianReader_ThrowIfNotEnoughSpaceForArray_System_Int32_System_Int32_">EndianReader.ThrowIfNotEnoughSpaceForArray(Int32, Int32)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AssetRipper.IO.Files.SerializedFiles.IO.html">AssetRipper.IO.Files.SerializedFiles.IO</a></h6>
+  <h6><strong>Assembly</strong>: AssetRipper.IO.Files.dll</h6>
+  <h5 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SerializedReader : EndianReader</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader__ctor_Stream_AssetRipper_IO_Endian_EndianType_AssetRipper_IO_Files_SerializedFiles_FormatVersion_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.%23ctor(Stream%2CAssetRipper.IO.Endian.EndianType%2CAssetRipper.IO.Files.SerializedFiles.FormatVersion)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Files/SerializedFiles/IO/SerializedReader.cs/#L8">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader__ctor_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.#ctor*"></a>
+  <h4 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader__ctor_Stream_AssetRipper_IO_Endian_EndianType_AssetRipper_IO_Files_SerializedFiles_FormatVersion_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.#ctor(Stream,AssetRipper.IO.Endian.EndianType,AssetRipper.IO.Files.SerializedFiles.FormatVersion)">SerializedReader(Stream, EndianType, FormatVersion)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SerializedReader(Stream stream, EndianType endianess, FormatVersion generation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AssetRipper.IO.Endian.EndianType.html">EndianType</a></td>
+        <td><span class="parametername">endianess</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AssetRipper.IO.Files.SerializedFiles.FormatVersion.html">FormatVersion</a></td>
+        <td><span class="parametername">generation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_Generation.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.Generation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Files/SerializedFiles/IO/SerializedReader.cs/#L46">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_Generation_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.Generation*"></a>
+  <h4 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_Generation" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.Generation">Generation</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FormatVersion Generation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AssetRipper.IO.Files.SerializedFiles.FormatVersion.html">FormatVersion</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_Version.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.Version%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Files/SerializedFiles/IO/SerializedReader.cs/#L51">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_Version_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.Version*"></a>
+  <h4 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_Version" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.Version">Version</h4>
+  <div class="markdown level1 summary"><p>Gets set after reading the metadata version</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnityVersion Version { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityVersion</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerialized__1.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerialized%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Files/SerializedFiles/IO/SerializedReader.cs/#L13">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerialized_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerialized*"></a>
+  <h4 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerialized__1" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerialized``1">ReadSerialized&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ReadSerialized&lt;T&gt;()
+    where T : ISerializedReadable, new()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerializedArray__1.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerializedArray%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Files/SerializedFiles/IO/SerializedReader.cs/#L20">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerializedArray_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerializedArray*"></a>
+  <h4 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerializedArray__1" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerializedArray``1">ReadSerializedArray&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T[] ReadSerializedArray&lt;T&gt;()
+    where T : ISerializedReadable, new()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerializedTypeArray__1_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerializedTypeArray%60%601(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Files/SerializedFiles/IO/SerializedReader.cs/#L33">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerializedTypeArray_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerializedTypeArray*"></a>
+  <h4 id="AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader_ReadSerializedTypeArray__1_System_Boolean_" data-uid="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.ReadSerializedTypeArray``1(System.Boolean)">ReadSerializedTypeArray&lt;T&gt;(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T[] ReadSerializedTypeArray&lt;T&gt;(bool hasTypeTree)
+    where T : SerializedTypeBase, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">hasTypeTree</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Files_SerializedFiles_IO_SerializedReader.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Files/SerializedFiles/IO/SerializedReader.cs/#L6" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

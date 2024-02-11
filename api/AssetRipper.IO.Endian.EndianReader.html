@@ -1,0 +1,2105 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EndianReader
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EndianReader
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AssetRipper.IO.Endian.EndianReader">
+  
+  
+  <h1 id="AssetRipper_IO_Endian_EndianReader" data-uid="AssetRipper.IO.Endian.EndianReader" class="text-break">Class EndianReader
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">EndianReader</span></div>
+      <div class="level2"><a class="xref" href="AssetRipper.Export.Modules.Shaders.AssetReader.html">AssetReader</a></div>
+      <div class="level2"><a class="xref" href="AssetRipper.IO.Files.SerializedFiles.IO.SerializedReader.html">SerializedReader</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AssetRipper.IO.Endian.html">AssetRipper.IO.Endian</a></h6>
+  <h6><strong>Assembly</strong>: AssetRipper.IO.Endian.dll</h6>
+  <h5 id="AssetRipper_IO_Endian_EndianReader_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class EndianReader : BinaryReader</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader__ctor_Stream_AssetRipper_IO_Endian_EndianType_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.%23ctor(Stream%2CAssetRipper.IO.Endian.EndianType)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L24">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader__ctor_" data-uid="AssetRipper.IO.Endian.EndianReader.#ctor*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader__ctor_Stream_AssetRipper_IO_Endian_EndianType_" data-uid="AssetRipper.IO.Endian.EndianReader.#ctor(Stream,AssetRipper.IO.Endian.EndianType)">EndianReader(Stream, EndianType)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EndianReader(Stream stream, EndianType endianess)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AssetRipper.IO.Endian.EndianType.html">EndianType</a></td>
+        <td><span class="parametername">endianess</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader__ctor_Stream_AssetRipper_IO_Endian_EndianType_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.%23ctor(Stream%2CAssetRipper.IO.Endian.EndianType%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L26">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader__ctor_" data-uid="AssetRipper.IO.Endian.EndianReader.#ctor*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader__ctor_Stream_AssetRipper_IO_Endian_EndianType_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.#ctor(Stream,AssetRipper.IO.Endian.EndianType,System.Boolean)">EndianReader(Stream, EndianType, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EndianReader(Stream stream, EndianType endianess, bool alignArray)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AssetRipper.IO.Endian.EndianType.html">EndianType</a></td>
+        <td><span class="parametername">endianess</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">alignArray</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_BufferSize.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.BufferSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L18">View Source</a>
+  </span>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_BufferSize" data-uid="AssetRipper.IO.Endian.EndianReader.BufferSize">BufferSize</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected const int BufferSize = 4096</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_EndianType.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.EndianType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L10">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_EndianType_" data-uid="AssetRipper.IO.Endian.EndianReader.EndianType*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_EndianType" data-uid="AssetRipper.IO.Endian.EndianReader.EndianType">EndianType</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EndianType EndianType { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AssetRipper.IO.Endian.EndianType.html">EndianType</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_IsAlignArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.IsAlignArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L16">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_IsAlignArray_" data-uid="AssetRipper.IO.Endian.EndianReader.IsAlignArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_IsAlignArray" data-uid="AssetRipper.IO.Endian.EndianReader.IsAlignArray">IsAlignArray</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAlignArray { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_RemainingStreamBytes.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.RemainingStreamBytes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L22">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_RemainingStreamBytes_" data-uid="AssetRipper.IO.Endian.EndianReader.RemainingStreamBytes*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_RemainingStreamBytes" data-uid="AssetRipper.IO.Endian.EndianReader.RemainingStreamBytes">RemainingStreamBytes</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected long RemainingStreamBytes { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_AlignStream.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.AlignStream%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L636">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_AlignStream_" data-uid="AssetRipper.IO.Endian.EndianReader.AlignStream*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_AlignStream" data-uid="AssetRipper.IO.Endian.EndianReader.AlignStream">AlignStream()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AlignStream()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_Finalize.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.Finalize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L32">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_Finalize_" data-uid="AssetRipper.IO.Endian.EndianReader.Finalize*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_Finalize" data-uid="AssetRipper.IO.Endian.EndianReader.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadBooleanArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadBooleanArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L271">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadBooleanArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadBooleanArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadBooleanArray" data-uid="AssetRipper.IO.Endian.EndianReader.ReadBooleanArray">ReadBooleanArray()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool[] ReadBooleanArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadBooleanArray_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadBooleanArray(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L272">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadBooleanArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadBooleanArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadBooleanArray_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadBooleanArray(System.Boolean)">ReadBooleanArray(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool[] ReadBooleanArray(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadByteArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadByteArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L323">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadByteArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadByteArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadByteArray" data-uid="AssetRipper.IO.Endian.EndianReader.ReadByteArray">ReadByteArray()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] ReadByteArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadByteArray_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadByteArray(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L324">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadByteArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadByteArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadByteArray_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadByteArray(System.Boolean)">ReadByteArray(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] ReadByteArray(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadChar.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadChar%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L37">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadChar_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadChar*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadChar" data-uid="AssetRipper.IO.Endian.EndianReader.ReadChar">ReadChar()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override char ReadChar()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Char</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadCharArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadCharArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L297">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadCharArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadCharArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadCharArray" data-uid="AssetRipper.IO.Endian.EndianReader.ReadCharArray">ReadCharArray()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public char[] ReadCharArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Char</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadCharArray_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadCharArray(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L298">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadCharArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadCharArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadCharArray_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadCharArray(System.Boolean)">ReadCharArray(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public char[] ReadCharArray(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Char</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadDecimal.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadDecimal%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L150">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadDecimal_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDecimal*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadDecimal" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDecimal">ReadDecimal()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override decimal ReadDecimal()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Decimal</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadDouble.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadDouble%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L138">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadDouble_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDouble*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadDouble" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDouble">ReadDouble()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double ReadDouble()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadDoubleArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadDoubleArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L554">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadDoubleArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDoubleArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadDoubleArray" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDoubleArray">ReadDoubleArray()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[] ReadDoubleArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadDoubleArray_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadDoubleArray(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L555">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadDoubleArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDoubleArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadDoubleArray_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadDoubleArray(System.Boolean)">ReadDoubleArray(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[] ReadDoubleArray(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadEndian__1.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadEndian%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L598">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadEndian_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadEndian*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadEndian__1" data-uid="AssetRipper.IO.Endian.EndianReader.ReadEndian``1">ReadEndian&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ReadEndian&lt;T&gt;()
+    where T : IEndianReadable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadEndianArray__1.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadEndianArray%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L603">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadEndianArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadEndianArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadEndianArray__1" data-uid="AssetRipper.IO.Endian.EndianReader.ReadEndianArray``1">ReadEndianArray&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T[] ReadEndianArray&lt;T&gt;()
+    where T : IEndianReadable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadEndianArrayArray__1.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadEndianArrayArray%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L619">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadEndianArrayArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadEndianArrayArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadEndianArrayArray__1" data-uid="AssetRipper.IO.Endian.EndianReader.ReadEndianArrayArray``1">ReadEndianArrayArray&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T[][] ReadEndianArrayArray&lt;T&gt;()
+    where T : IEndianReadable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadExactly_Span_System_Byte__.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadExactly(Span%7BSystem.Byte%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L219">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadExactly_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadExactly*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadExactly_Span_System_Byte__" data-uid="AssetRipper.IO.Endian.EndianReader.ReadExactly(Span{System.Byte})">ReadExactly(Span&lt;Byte&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ReadExactly(Span&lt;byte&gt; buffer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Span</span>&lt;<span class="xref">System.Byte</span>&gt;</td>
+        <td><span class="parametername">buffer</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadHalf.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadHalf%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L114">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadHalf_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadHalf*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadHalf" data-uid="AssetRipper.IO.Endian.EndianReader.ReadHalf">ReadHalf()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Half ReadHalf()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Half</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt16.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt16%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L42">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt16_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt16*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt16" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt16">ReadInt16()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override short ReadInt16()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt16Array.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt16Array%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L372">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt16Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt16Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt16Array" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt16Array">ReadInt16Array()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public short[] ReadInt16Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int16</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt16Array_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt16Array(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L373">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt16Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt16Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt16Array_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt16Array(System.Boolean)">ReadInt16Array(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public short[] ReadInt16Array(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int16</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt32.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt32%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L66">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt32_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt32*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt32" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt32">ReadInt32()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int ReadInt32()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt32Array.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt32Array%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L424">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt32Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt32Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt32Array" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt32Array">ReadInt32Array()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[] ReadInt32Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt32Array_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt32Array(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L425">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt32Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt32Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt32Array_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt32Array(System.Boolean)">ReadInt32Array(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[] ReadInt32Array(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt64.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt64%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L90">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt64_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt64*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt64" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt64">ReadInt64()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override long ReadInt64()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt64Array.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt64Array%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L476">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt64Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt64Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt64Array" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt64Array">ReadInt64Array()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long[] ReadInt64Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadInt64Array_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadInt64Array(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L477">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadInt64Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt64Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadInt64Array_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadInt64Array(System.Boolean)">ReadInt64Array(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long[] ReadInt64Array(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadSByteArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadSByteArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L346">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadSByteArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSByteArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadSByteArray" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSByteArray">ReadSByteArray()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sbyte[] ReadSByteArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.SByte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadSByteArray_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadSByteArray(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L347">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadSByteArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSByteArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadSByteArray_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSByteArray(System.Boolean)">ReadSByteArray(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sbyte[] ReadSByteArray(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.SByte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadSingle.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadSingle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L126">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadSingle_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSingle*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadSingle" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSingle">ReadSingle()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override float ReadSingle()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadSingleArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadSingleArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L528">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadSingleArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSingleArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadSingleArray" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSingleArray">ReadSingleArray()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float[] ReadSingleArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadSingleArray_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadSingleArray(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L529">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadSingleArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSingleArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadSingleArray_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadSingleArray(System.Boolean)">ReadSingleArray(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float[] ReadSingleArray(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadString.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L171">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadString_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadString*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadString" data-uid="AssetRipper.IO.Endian.EndianReader.ReadString">ReadString()</h4>
+  <div class="markdown level1 summary"><p>Read a UTF8 string</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ReadString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="AssetRipper_IO_Endian_EndianReader_ReadString_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>First, a 32-bit integer length is read.
+It signifies the length of a byte buffer, which is read next.
+A string is then parsed from the buffer with <span class="xref">System.Text.Encoding.UTF8</span>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadString_System_Int32_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadString(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L177">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadString_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadString*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadString_System_Int32_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadString(System.Int32)">ReadString(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ReadString(int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">length</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadStringArray.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadStringArray%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L580">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadStringArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadStringArray" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringArray">ReadStringArray()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string[] ReadStringArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadStringArray_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadStringArray(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L581">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadStringArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadStringArray_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringArray(System.Boolean)">ReadStringArray(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string[] ReadStringArray(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadStringZeroTerm%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L237">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringZeroTerm*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringZeroTerm">ReadStringZeroTerm()</h4>
+  <div class="markdown level1 summary"><p>Read C like UTF8 format zero terminated string</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ReadStringZeroTerm()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Read string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm_System_Int32_System_String__.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadStringZeroTerm(System.Int32%2CSystem.String%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L252">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringZeroTerm*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadStringZeroTerm_System_Int32_System_String__" data-uid="AssetRipper.IO.Endian.EndianReader.ReadStringZeroTerm(System.Int32,System.String@)">ReadStringZeroTerm(Int32, out String)</h4>
+  <div class="markdown level1 summary"><p>Read C like UTF8 format zero terminated string</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ReadStringZeroTerm(int maxLength, out string result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>Max allowed character count to read</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Read string if found</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether zero term has been found</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt16.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt16%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L54">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt16_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt16*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt16" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt16">ReadUInt16()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ushort ReadUInt16()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt16Array.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt16Array%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L398">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt16Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt16Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt16Array" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt16Array">ReadUInt16Array()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort[] ReadUInt16Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt16Array_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt16Array(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L399">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt16Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt16Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt16Array_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt16Array(System.Boolean)">ReadUInt16Array(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort[] ReadUInt16Array(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt32.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt32%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L78">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt32_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt32*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt32" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt32">ReadUInt32()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override uint ReadUInt32()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt32Array.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt32Array%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L450">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt32Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt32Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt32Array" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt32Array">ReadUInt32Array()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint[] ReadUInt32Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt32Array_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt32Array(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L451">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt32Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt32Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt32Array_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt32Array(System.Boolean)">ReadUInt32Array(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint[] ReadUInt32Array(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt64.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt64%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L102">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt64_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt64*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt64" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt64">ReadUInt64()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ulong ReadUInt64()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt64Array.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt64Array%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L502">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt64Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt64Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt64Array" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt64Array">ReadUInt64Array()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ulong[] ReadUInt64Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ReadUInt64Array_System_Boolean_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ReadUInt64Array(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L503">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ReadUInt64Array_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt64Array*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ReadUInt64Array_System_Boolean_" data-uid="AssetRipper.IO.Endian.EndianReader.ReadUInt64Array(System.Boolean)">ReadUInt64Array(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ulong[] ReadUInt64Array(bool allowAlignment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowAlignment</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader_ThrowIfNotEnoughSpaceForArray_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader.ThrowIfNotEnoughSpaceForArray(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L641">View Source</a>
+  </span>
+  <a id="AssetRipper_IO_Endian_EndianReader_ThrowIfNotEnoughSpaceForArray_" data-uid="AssetRipper.IO.Endian.EndianReader.ThrowIfNotEnoughSpaceForArray*"></a>
+  <h4 id="AssetRipper_IO_Endian_EndianReader_ThrowIfNotEnoughSpaceForArray_System_Int32_System_Int32_" data-uid="AssetRipper.IO.Endian.EndianReader.ThrowIfNotEnoughSpaceForArray(System.Int32,System.Int32)">ThrowIfNotEnoughSpaceForArray(Int32, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void ThrowIfNotEnoughSpaceForArray(int elementNumberToRead, int elementSize)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">elementNumberToRead</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">elementSize</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/AssetRipper/AssetRipper/new/master/apiSpec/new?filename=AssetRipper_IO_Endian_EndianReader.md&amp;value=---%0Auid%3A%20AssetRipper.IO.Endian.EndianReader%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/AssetRipper/AssetRipper/blob/master/Source/AssetRipper.IO.Endian/EndianReader.cs/#L7" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
