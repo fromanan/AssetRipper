@@ -21,7 +21,13 @@ using System.Text.RegularExpressions;
 
 namespace AssetRipper.Processing.AnimationClips
 {
-	public partial struct CustomCurveResolver
+	/// <summary>
+	/// Resolves the attribute names for custom curves
+	/// </summary>
+	/// <remarks>
+	/// This has to remain a class due to the lazy initialization of <see cref="CustomCurveResolver.Roots"/>.
+	/// </remarks>
+	public partial class CustomCurveResolver
 	{
 		public CustomCurveResolver(IAnimationClip clip)
 		{
@@ -364,8 +370,17 @@ namespace AssetRipper.Processing.AnimationClips
 						{
 							return foundPath;
 						}
+						else
+						{
+							//This has at least one ordinal property name,
+							//So the precalculated hashes are insufficient for recovery.
+							//Binary analysis may be required.
+							//Example failed attributes:
+							//0x8D909E70 (2375065200)
+							//https://github.com/AssetRipper/AssetRipper/issues/1239
+						}
 					}
-					return ThrowUnknownAttributeException(type, attribute);
+					return Crc32Algorithm.ReverseAscii(attribute, $"ParticleForceField_0x{attribute:X}_");
 
 				case BindingCustomType.UserDefined:
 					return Crc32Algorithm.ReverseAscii(attribute, $"UserDefined_0x{attribute:X}_");
