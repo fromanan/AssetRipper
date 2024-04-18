@@ -1,4 +1,5 @@
-﻿using AssetRipper.Assets.Collections;
+﻿using AssetRipper.Assets.Cloning;
+using AssetRipper.Assets.Collections;
 using AssetRipper.Assets.Export;
 using AssetRipper.Assets.Metadata;
 using AssetRipper.IO.Endian;
@@ -28,13 +29,6 @@ public interface IUnityObjectBase : IUnityAssetBase
 	/// The <see cref="AssetInfo.PathID"/> of this object within <see cref="Collection"/>.
 	/// </summary>
 	long PathID { get; }
-	/// <summary>
-	/// A random GUID for this object.
-	/// </summary>
-	/// <remarks>
-	/// This may be overridden by export code, eg for MonoScripts.
-	/// </remarks>
-	UnityGuid GUID { get; }
 	/// <summary>
 	/// The original path of this object, if known.
 	/// </summary>
@@ -68,6 +62,7 @@ public interface IUnityObjectBase : IUnityAssetBase
 
 	YamlDocument ExportYamlDocument(IExportContainer container);
 	string GetBestName();
+	void CopyValues(IUnityObjectBase? source) => CopyValues(source, new PPtrConverter(source, this));
 }
 public static class UnityObjectBaseExtensions
 {
