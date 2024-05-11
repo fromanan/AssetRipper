@@ -1,25 +1,26 @@
 ﻿using AssetRipper.Import.Structure.Assembly.Serializable;
-using AssetRipper.IO.Files.SerializedFiles.Parser.TypeTrees;
 using AssetRipper.SourceGenerated.Extensions;
 
 namespace AssetRipper.Import.Structure.Assembly.TypeTrees
 {
 	public sealed class SerializableTreeType : SerializableType
 	{
-		private SerializableTreeType(string? @namespace, string name, PrimitiveType type, int version) : base(@namespace, type, name)
+		private SerializableTreeType(string? @namespace, string name, PrimitiveType type, int version, bool flowMappedInYaml) : base(@namespace, type, name)
 		{
 			Version = version;
+			FlowMappedInYaml = flowMappedInYaml;
 		}
 
-		private SerializableTreeType(string name, PrimitiveType type, int version) : this(null, name, type, version)
+		private SerializableTreeType(string name, PrimitiveType type, int version, bool flowMappedInYaml) : this(null, name, type, version, flowMappedInYaml)
 		{
 		}
 
 		public override int Version { get; }
+		public override bool FlowMappedInYaml { get; }
 
 		public static SerializableTreeType FromRootNode(TypeTreeNodeStruct rootNode)
 		{
-			SerializableTreeType serializableTreeType = new SerializableTreeType(rootNode.TypeName, PrimitiveType.Complex, rootNode.Version);
+			SerializableTreeType serializableTreeType = new SerializableTreeType(rootNode.TypeName, PrimitiveType.Complex, rootNode.Version, rootNode.FlowMappedInYaml);
 
 			List<Field> fields = new();
 			int startIndex = FindStartingIndex(rootNode);
@@ -33,31 +34,31 @@ namespace AssetRipper.Import.Structure.Assembly.TypeTrees
 
 		private static void AddNode(TypeTreeNodeStruct node, List<Field> fields)
 		{
-			ToPrimititeType(node, out PrimitiveType primitiveType, out int arrayDepth, out TypeTreeNodeStruct primitiveNode);
+			ToPrimititeType(node, out string typeName, out PrimitiveType primitiveType, out int arrayDepth, out bool alignBytes, out TypeTreeNodeStruct primitiveNode);
 
 			SerializableTreeType serializableTreeType;
 			if (primitiveType is PrimitiveType.Complex)
 			{
 				if (primitiveNode.IsPPtr)
 				{
-					serializableTreeType = new SerializableTreeType("UnityEngine", "Object", primitiveType, primitiveNode.Version);
+					serializableTreeType = new SerializableTreeType("UnityEngine", "Object", primitiveType, primitiveNode.Version, primitiveNode.FlowMappedInYaml);
 				}
 				else
 				{
-					serializableTreeType = FromComplexNode(node.TypeName, primitiveNode);
+					serializableTreeType = FromComplexNode(typeName, primitiveNode);
 				}
 			}
 			else
 			{
-				serializableTreeType = new SerializableTreeType(node.TypeName, primitiveType, primitiveNode.Version);
+				serializableTreeType = new SerializableTreeType(typeName, primitiveType, primitiveNode.Version, primitiveNode.FlowMappedInYaml);
 			}
 
-			fields.Add(new Field(serializableTreeType, arrayDepth, node.Name));
+			fields.Add(new Field(serializableTreeType, arrayDepth, node.Name, alignBytes));
 		}
 
 		private static SerializableTreeType FromComplexNode(string name, TypeTreeNodeStruct node)
 		{
-			SerializableTreeType serializableTreeType = new SerializableTreeType(name, PrimitiveType.Complex, node.Version);
+			SerializableTreeType serializableTreeType = new SerializableTreeType(name, PrimitiveType.Complex, node.Version, node.FlowMappedInYaml);
 			List<Field> fields = new();
 			foreach (TypeTreeNodeStruct subNode in node.SubNodes)
 			{
@@ -75,23 +76,36 @@ namespace AssetRipper.Import.Structure.Assembly.TypeTrees
 			return startIndex;
 		}
 
-		private static void ToPrimititeType(TypeTreeNodeStruct node, out PrimitiveType primitiveType, out int arrayDepth, out TypeTreeNodeStruct primitiveNode)
+		private static void ToPrimititeType(TypeTreeNodeStruct node, out string typeName, out PrimitiveType primitiveType, out int arrayDepth, out bool alignBytes, out TypeTreeNodeStruct primitiveNode)
 		{
+			alignBytes = false;
+			typeName = "";
 			arrayDepth = 0;
 			while (true)
 			{
+				alignBytes |= node.AlignBytes;
 				if (node.IsArray)
 				{
 					arrayDepth++;
 					node = node.SubNodes[1];
 				}
-				else if (node.IsVector || node.IsNamedVector)
+				else if (node.IsVector)
 				{
+					alignBytes |= node.SubNodes[0].AlignBytes;
+					arrayDepth++;
+					node = node.SubNodes[0].SubNodes[1];
+				}
+				else if (node.IsNamedVector)
+				{
+					//It's important that typeName is set before node is reassigned.
+					SetIfEmpty(ref typeName, node.TypeName);
+					alignBytes |= node.SubNodes[0].AlignBytes;
 					arrayDepth++;
 					node = node.SubNodes[0].SubNodes[1];
 				}
 				else
 				{
+					SetIfEmpty(ref typeName, node.TypeName);
 					break;
 				}
 			}
@@ -120,6 +134,14 @@ namespace AssetRipper.Import.Structure.Assembly.TypeTrees
 					_ => PrimitiveType.Complex,
 				};
 			primitiveNode = node;
+
+			static void SetIfEmpty(ref string local, string value)
+			{
+				if (string.IsNullOrEmpty(local))
+				{
+					local = value;
+				}
+			}
 		}
 	}
 }
