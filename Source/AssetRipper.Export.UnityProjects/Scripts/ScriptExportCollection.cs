@@ -99,7 +99,7 @@ public sealed class ScriptExportCollection : ScriptExportCollectionBase
 				if (!assemblyDefinitionDetailsDictionary.ContainsKey(assemblyName))
 				{
 					string assemblyDirectoryPath = Path.Combine(assetsDirectoryPath, GetScriptsFolderName(assemblyName), assemblyName);
-					AssemblyDefinitionDetails details = new AssemblyDefinitionDetails(assemblyName, assemblyDirectoryPath);
+					AssemblyDefinitionDetails details = new(assemblyName, assemblyDirectoryPath);
 					assemblyDefinitionDetailsDictionary.Add(assemblyName, details);
 				}
 			}
@@ -147,7 +147,7 @@ public sealed class ScriptExportCollection : ScriptExportCollectionBase
 			editorPlatformSettings.Settings.Add("DefaultValueInitialized", "true");
 		}
 		
-		Meta meta = new Meta(guid, importer);
+		Meta meta = new(guid, importer);
 		ExportMeta(container, meta, path);
 
 	}

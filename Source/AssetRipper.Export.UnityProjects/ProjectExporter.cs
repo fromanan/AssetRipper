@@ -25,10 +25,10 @@ namespace AssetRipper.Export.UnityProjects
 		/// IAssetExporter: the exporter that can handle that asset type<br/>
 		/// Bool: allow the exporter to apply on inherited asset types?
 		/// </summary>
-		private readonly List<(Type, IAssetExporter, bool)> registeredExporters = new();
+		private readonly List<(Type, IAssetExporter, bool)> registeredExporters = [];
 
 		//Exporters
-		private DummyAssetExporter DummyExporter { get; } = new DummyAssetExporter();
+		private DummyAssetExporter DummyExporter { get; } = new();
 
 		/// <summary>Adds an exporter to the stack of exporters for this asset type.</summary>
 		/// <typeparam name="T">The c sharp type of this asset type. Any inherited types also get this exporter.</typeparam>
@@ -134,7 +134,7 @@ namespace AssetRipper.Export.UnityProjects
 			EventExportPreparationFinished?.Invoke();
 
 			EventExportStarted?.Invoke();
-			ProjectAssetContainer container = new ProjectAssetContainer(this, options, fileCollection.FetchAssets(), collections);
+			ProjectAssetContainer container = new(this, options, fileCollection.FetchAssets(), collections);
 			for (int i = 0; i < collections.Count; i++)
 			{
 				IExportCollection collection = collections[i];
@@ -155,8 +155,8 @@ namespace AssetRipper.Export.UnityProjects
 
 		private List<IExportCollection> CreateCollections(GameBundle fileCollection)
 		{
-			List<IExportCollection> collections = new();
-			HashSet<IUnityObjectBase> queued = new();
+			List<IExportCollection> collections = [];
+			HashSet<IUnityObjectBase> queued = [];
 
 			foreach (IUnityObjectBase asset in fileCollection.FetchAssets())
 			{

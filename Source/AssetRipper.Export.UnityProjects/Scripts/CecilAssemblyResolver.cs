@@ -24,14 +24,14 @@ namespace AssetRipper.Export.UnityProjects.Scripts
 		///	   Given that this just causes a failed resolve on System.Private.CoreLib, it might not be doing much.
 		/// </remarks>
 		private readonly ConcurrentDictionary<string, PEFile> peAssemblies = new();
-		private readonly UniversalAssemblyResolver backupResolver = new UniversalAssemblyResolver(null, false, null);
+		private readonly UniversalAssemblyResolver backupResolver = new(null, false, null);
 		public CecilAssemblyResolver(IAssemblyManager manager)
 		{
 			foreach (AssemblyDefinition assembly in manager.GetAssemblies())
 			{
 				Stream stream = manager.GetStreamForAssembly(assembly);
 				stream.Position = 0;
-				PEFile peFile = new PEFile(assembly.Name!, stream);
+				PEFile peFile = new(assembly.Name!, stream);
 				if (!peAssemblies.TryAdd(assembly.Name!, peFile))
 				{
 					throw new Exception($"Could not add pe assembly: {assembly.Name} to name dictionary!");
