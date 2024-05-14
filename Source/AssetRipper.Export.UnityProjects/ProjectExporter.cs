@@ -154,7 +154,7 @@ namespace AssetRipper.Export.UnityProjects
 			EventExportFinished?.Invoke();
 		}
 
-		private List<IExportCollection> CreateCollections(GameBundle fileCollection)
+		private List<IExportCollection> CreateCollections(Bundle fileCollection)
 		{
 			List<IExportCollection> collections = [];
 			HashSet<IUnityObjectBase> queued = [];
