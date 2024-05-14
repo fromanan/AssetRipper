@@ -67,22 +67,32 @@ public sealed class ScriptExportCollection : ScriptExportCollectionBase
 			string assemblyName = assembly.Name!;
 			AssemblyExportType exportType = AssetExporter.GetExportType(assemblyName);
 
-			if (exportType is AssemblyExportType.Decompile)
+			switch (exportType)
 			{
-				Logger.Info(LogCategory.Export, $"Decompiling {assemblyName}");
-				string outputDirectory = Path.Combine(assetsDirectoryPath, GetScriptsFolderName(assemblyName), assemblyName);
-				Directory.CreateDirectory(outputDirectory);
-				AssetExporter.Decompiler.DecompileWholeProject(assembly, outputDirectory);
-
-				assemblyDefinitionDetailsDictionary.TryAdd(assemblyName, new AssemblyDefinitionDetails(assembly, outputDirectory));
-			}
-			else if (exportType is AssemblyExportType.Save)
-			{
-				Logger.Info(LogCategory.Export, $"Saving {assemblyName}");
-				Directory.CreateDirectory(pluginsFolder);
-				string outputPath = Path.Combine(pluginsFolder, FilenameUtils.AddAssemblyFileExtension(assemblyName));
-				AssetExporter.AssemblyManager.SaveAssembly(assembly, outputPath);
-				OnAssemblyExported(container, outputPath);
+				case AssemblyExportType.Decompile:
+				{
+					Logger.Info(LogCategory.Export, $"Decompiling {assemblyName}");
+					string outputDirectory = Path.Combine(assetsDirectoryPath, GetScriptsFolderName(assemblyName), assemblyName);
+					Directory.CreateDirectory(outputDirectory);
+					AssetExporter.Decompiler.DecompileWholeProject(assembly, outputDirectory);
+					assemblyDefinitionDetailsDictionary.TryAdd(assemblyName, new AssemblyDefinitionDetails(assembly, outputDirectory));
+					break;
+				}
+				case AssemblyExportType.Save:
+				{
+					Logger.Info(LogCategory.Export, $"Saving {assemblyName}");
+					Directory.CreateDirectory(pluginsFolder);
+					string outputPath = Path.Combine(pluginsFolder, FilenameUtils.AddAssemblyFileExtension(assemblyName));
+					AssetExporter.AssemblyManager.SaveAssembly(assembly, outputPath);
+					OnAssemblyExported(container, outputPath);
+					break;
+				}
+				case AssemblyExportType.Skip:
+				default:
+				{
+					Logger.Warning(LogCategory.Export, $"Invalid AssemblyExportType ({assemblyName}), skipping...");
+					break;
+				}
 			}
 		}
 
