@@ -142,8 +142,7 @@ namespace AssetRipper.Export.UnityProjects
 				if (collection.Exportable)
 				{
 					Logger.Info(LogCategory.ExportProgress, $"Exporting '{collection.Name}'");
-					bool exportedSuccessfully = collection.Export(container, options.ProjectRootPath);
-					if (!exportedSuccessfully)
+					if (!collection.Export(container, options.ProjectRootPath))
 					{
 						Logger.Warning(LogCategory.ExportProgress, $"Failed to export '{collection.Name}'");
 					}

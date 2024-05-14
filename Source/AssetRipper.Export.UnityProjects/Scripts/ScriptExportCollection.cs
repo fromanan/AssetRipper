@@ -49,14 +49,7 @@ public sealed class ScriptExportCollection : ScriptExportCollectionBase
 
 	private bool ShouldExport(IMonoScript script)
 	{
-		if (AssetExporter.GetExportType(script) is AssemblyExportType.Decompile)
-		{
-			return script.IsScriptPresents(AssetExporter.AssemblyManager);
-		}
-		else
-		{
-			return false;
-		}
+		return AssetExporter.GetExportType(script) is AssemblyExportType.Decompile && script.IsScriptPresents(AssetExporter.AssemblyManager);
 	}
 
 	public override bool Export(IExportContainer container, string projectDirectory)
