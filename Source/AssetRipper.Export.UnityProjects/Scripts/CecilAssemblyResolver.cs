@@ -45,16 +45,15 @@ namespace AssetRipper.Export.UnityProjects.Scripts
 			{
 				return result;
 			}
-			else if (backupResolver.TryResolve(reference, out result))
+
+			if (backupResolver.TryResolve(reference, out result))
 			{
 				Logger.Info(LogCategory.Export, $"Assembly resolved from local .NET installation: {reference.Name}");
 				return result;
 			}
-			else
-			{
-				Logger.Warning(LogCategory.Export, $"Could not resolve assembly: {reference.Name}");
-				return null;
-			}
+
+			Logger.Warning(LogCategory.Export, $"Could not resolve assembly: {reference.Name}");
+			return null;
 		}
 
 		public PEFile Resolve(AssemblyDefinition assembly) => peAssemblies[assembly.Name!];
@@ -72,11 +71,12 @@ namespace AssetRipper.Export.UnityProjects.Scripts
 		/// <returns></returns>
 		public PEFile? ResolveModule(PEFile mainModule, string moduleName)
 		{
-			PEFile? result = peAssemblies.Values.Where(x => x.Name == moduleName).SingleOrDefault();
-			if (result is not null)
+			if (peAssemblies.Values.SingleOrDefault(x => x.Name == moduleName) is { } result)
 			{
+				return result;
 			}
-			else if (backupResolver.TryResolveModule(mainModule, moduleName, out result))
+
+			if (backupResolver.TryResolveModule(mainModule, moduleName, out result))
 			{
 				Logger.Info(LogCategory.Export, $"Module resolved from local .NET installation: {moduleName}");
 			}

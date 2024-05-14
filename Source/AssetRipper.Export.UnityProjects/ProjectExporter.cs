@@ -98,11 +98,13 @@ namespace AssetRipper.Export.UnityProjects
 		private Stack<IAssetExporter> GetExporterStack(IUnityObjectBase asset) => GetExporterStack(asset.GetType());
 		private Stack<IAssetExporter> GetExporterStack(Type type)
 		{
-			if (!typeMap.TryGetValue(type, out Stack<IAssetExporter>? exporters))
+			if (typeMap.TryGetValue(type, out Stack<IAssetExporter>? exporters))
 			{
-				exporters = CalculateAssetExporterStack(type);
-				typeMap.Add(type, exporters);
+				return exporters;
 			}
+
+			exporters = CalculateAssetExporterStack(type);
+			typeMap.Add(type, exporters);
 			return exporters;
 		}
 

@@ -118,14 +118,11 @@ public sealed class ScriptExportCollection : ScriptExportCollectionBase
 		//     see: https://blog.unity.com/technology/unity-2017-3b-feature-preview-assembly-definition-files-and-transform-tool
 		if (assemblyDefinitionDetailsDictionary.Count > 0 && container.ExportVersion.GreaterThanOrEquals(2017, 3))
 		{
-			foreach (AssemblyDefinitionDetails details in assemblyDefinitionDetailsDictionary.Values)
+			var assemblies = assemblyDefinitionDetailsDictionary.Values.Where(details =>
+				!ReferenceAssemblies.IsPredefinedAssembly(details.AssemblyName));
+			foreach (AssemblyDefinitionDetails details in assemblies)
 			{
-				// exclude predefined assemblies like Assembly-CSharp.dll
-				//    see: https://docs.unity3d.com/2017.3/Documentation/Manual/ScriptCompilationAssemblyDefinitionFiles.html
-				if (!ReferenceAssemblies.IsPredefinedAssembly(details.AssemblyName))
-				{
-					AssemblyDefinitionExporter.Export(details);
-				}
+				AssemblyDefinitionExporter.Export(details);
 			}
 		}
 
