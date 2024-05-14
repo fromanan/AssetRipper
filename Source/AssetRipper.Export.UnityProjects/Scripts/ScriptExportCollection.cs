@@ -13,8 +13,15 @@ using AssetRipper.SourceGenerated.Subclasses.PlatformSettingsData_Plugin;
 using System.Diagnostics;
 
 namespace AssetRipper.Export.UnityProjects.Scripts;
+
 public sealed class ScriptExportCollection : ScriptExportCollectionBase
 {
+	public override string Name => nameof(ScriptExportCollection);
+
+	private readonly List<IMonoScript> m_export = [];
+	
+	private readonly Dictionary<IUnityObjectBase, IMonoScript> m_scripts = new();
+	
 	public ScriptExportCollection(ScriptExporter assetExporter, IMonoScript firstScript) : base(assetExporter, firstScript)
 	{
 		Debug.Assert(assetExporter.AssemblyManager.IsSet);
@@ -107,7 +114,6 @@ public sealed class ScriptExportCollection : ScriptExportCollectionBase
 			if (System.IO.File.Exists($"{filePath}.meta"))
 			{
 				Logger.Error(LogCategory.Export, $"Metafile already exists at {filePath}.meta");
-				//throw new Exception($"Metafile already exists at {filePath}.meta");
 			}
 			else
 			{
@@ -149,11 +155,5 @@ public sealed class ScriptExportCollection : ScriptExportCollectionBase
 		
 		Meta meta = new(guid, importer);
 		ExportMeta(container, meta, path);
-
 	}
-
-	public override string Name => nameof(ScriptExportCollection);
-
-	private readonly List<IMonoScript> m_export = new();
-	private readonly Dictionary<IUnityObjectBase, IMonoScript> m_scripts = new();
 }

@@ -84,6 +84,7 @@ namespace AssetRipper.Export.UnityProjects.Scripts
 			{
 				Logger.Warning(LogCategory.Export, $"Could not resolve module: {moduleName}");
 			}
+			
 			return result;
 		}
 
