@@ -159,17 +159,14 @@ namespace AssetRipper.Export.UnityProjects
 			List<IExportCollection> collections = [];
 			HashSet<IUnityObjectBase> queued = [];
 
-			foreach (IUnityObjectBase asset in fileCollection.FetchAssets())
+			foreach (IUnityObjectBase asset in fileCollection.FetchAssets().Where(a => !queued.Contains(a)))
 			{
-				if (!queued.Contains(asset))
+				IExportCollection collection = CreateCollection(asset);
+				foreach (IUnityObjectBase element in collection.Assets)
 				{
-					IExportCollection collection = CreateCollection(asset);
-					foreach (IUnityObjectBase element in collection.Assets)
-					{
-						queued.Add(element);
-					}
-					collections.Add(collection);
+					queued.Add(element);
 				}
+				collections.Add(collection);
 			}
 
 			return collections;
