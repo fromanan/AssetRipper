@@ -4,11 +4,12 @@ using AssetRipper.SourceGenerated;
 using AssetRipper.Tpk;
 using AssetRipper.Tpk.Shared;
 using AssetRipper.Tpk.TypeTrees;
+using System.Collections;
 using System.Diagnostics;
 
 namespace AssetRipper.Import.Structure.Assembly.TypeTrees;
 
-public readonly struct TypeTreeNodeStruct
+public readonly struct TypeTreeNodeStruct : IReadOnlyList<TypeTreeNodeStruct>
 {
 	public string TypeName { get; }
 	public string Name { get; }
@@ -20,6 +21,12 @@ public readonly struct TypeTreeNodeStruct
 	public bool FlowMappedInYaml => MetaFlag.IsTransferUsingFlowMappingStyle();
 
 	private readonly TypeTreeNodeStruct[] subNodes;
+
+	public int Count => subNodes.Length;
+
+	public TypeTreeNodeStruct this[int index] => subNodes[index];
+
+	public TypeTreeNodeStruct this[string name] => subNodes.First(t => t.Name == name);
 
 	public bool IsArray
 	{
@@ -61,6 +68,66 @@ public readonly struct TypeTreeNodeStruct
 				//https://github.com/AssetRipper/AssetRipper/issues/1328
 			}
 			return false;
+		}
+	}
+
+	public bool IsPair
+	{
+		get
+		{
+			return TypeName is "pair" && SubNodes.Count == 2 && SubNodes[0].Name == "first" && SubNodes[1].Name == "second";
+		}
+	}
+
+	public bool IsMap
+	{
+		get
+		{
+			return TypeName is "map" && SubNodes.Count == 1 && SubNodes[0].IsArray && SubNodes[0].SubNodes[1].IsPair;
+		}
+	}
+
+	/// <summary>
+	/// This contains the data for an asset's [SerializeReference] fields.
+	/// </summary>
+	/// <remarks>
+	/// This is the last top-level field in the asset's type tree.
+	/// </remarks>
+	public bool IsManagedReferencesRegistry
+	{
+		get
+		{
+			return TypeName is "ManagedReferencesRegistry" && Name is "references" && SubNodes.Count > 1;
+		}
+	}
+
+	/// <summary>
+	/// This is the data for a [SerializeReference] object reference.
+	/// </summary>
+	/// <remarks>
+	/// If the type tree is flattened into a list, this is the last entry in the list.
+	/// </remarks>
+	public bool IsReferencedObjectData
+	{
+		get
+		{
+			return TypeName is "ReferencedObjectData" && Name is "data" && SubNodes.Count is 0;
+		}
+	}
+
+	public bool IsByte
+	{
+		get
+		{
+			return Count is 0 && TypeName is "char" or "UInt8";
+		}
+	}
+
+	public bool IsString
+	{
+		get
+		{
+			return Count is 1 && TypeName is "string" && this[0].IsArray && this[0][1].IsByte;
 		}
 	}
 
@@ -199,4 +266,8 @@ public readonly struct TypeTreeNodeStruct
 			return new TypeTreeNodeStruct(node, subNodes);
 		}
 	}
+
+	public IEnumerator<TypeTreeNodeStruct> GetEnumerator() => SubNodes.GetEnumerator();
+
+	IEnumerator IEnumerable.GetEnumerator() => SubNodes.GetEnumerator();
 }
