@@ -1,5 +1,4 @@
 ﻿using AssetRipper.Assets;
-using AssetRipper.Assets.Export.Yaml;
 using AssetRipper.Assets.Metadata;
 using AssetRipper.Assets.Traversal;
 using AssetRipper.SourceGenerated;
@@ -161,7 +160,7 @@ public class YamlWalker : AssetWalker
 	{
 		YamlMappingNode node = new YamlMappingNode();
 		ContextStack.Push(new(node));
-		if (!IsStringLike<TKey>())
+		if (!IsValidDictionaryKey<TKey>())
 		{
 			ContextStack.Push(new(node, First));
 		}
@@ -172,7 +171,7 @@ public class YamlWalker : AssetWalker
 	{
 		Debug.Assert(CurrentMappingNode is not null);
 		Debug.Assert(CurrentSequenceNode is null);
-		if (IsStringLike<TKey>())
+		if (IsValidDictionaryKey<TKey>())
 		{
 			Debug.Assert(CurrentFieldName is not null);
 		}
@@ -190,7 +189,7 @@ public class YamlWalker : AssetWalker
 
 	public override bool EnterDictionary<TKey, TValue>(IReadOnlyCollection<KeyValuePair<TKey, TValue>> dictionary)
 	{
-		if (IsStringLike<TKey>())
+		if (IsValidDictionaryKey<TKey>())
 		{
 			return EnterMap();
 		}
@@ -202,7 +201,7 @@ public class YamlWalker : AssetWalker
 
 	public override void ExitDictionary<TKey, TValue>(IReadOnlyCollection<KeyValuePair<TKey, TValue>> dictionary)
 	{
-		if (IsStringLike<TKey>())
+		if (IsValidDictionaryKey<TKey>())
 		{
 			ExitMap();
 		}
@@ -214,7 +213,7 @@ public class YamlWalker : AssetWalker
 
 	public override bool EnterDictionaryPair<TKey, TValue>(KeyValuePair<TKey, TValue> pair)
 	{
-		if (IsStringLike<TKey>())
+		if (IsValidDictionaryKey<TKey>())
 		{
 			Debug.Assert(CurrentMappingNode is not null);
 			Debug.Assert(CurrentSequenceNode is null);
@@ -235,7 +234,7 @@ public class YamlWalker : AssetWalker
 
 	public override void DivideDictionaryPair<TKey, TValue>(KeyValuePair<TKey, TValue> pair)
 	{
-		if (IsStringLike<TKey>())
+		if (IsValidDictionaryKey<TKey>())
 		{
 		}
 		else
@@ -249,7 +248,7 @@ public class YamlWalker : AssetWalker
 
 	public override void ExitDictionaryPair<TKey, TValue>(KeyValuePair<TKey, TValue> pair)
 	{
-		if (IsStringLike<TKey>())
+		if (IsValidDictionaryKey<TKey>())
 		{
 		}
 		else
@@ -276,7 +275,7 @@ public class YamlWalker : AssetWalker
 			}
 			else
 			{
-				Debug.Assert(IsString<T>());
+				Debug.Assert(IsValidDictionaryKey<T>());
 				ContextStack.Push(new(CurrentMappingNode, value?.ToString() ?? ""));
 			}
 		}
@@ -425,7 +424,7 @@ public class YamlWalker : AssetWalker
 	private static bool IsString<T>() => typeof(T) == typeof(string) || typeof(T) == typeof(Utf8String);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-	private static bool IsStringLike<T>() => IsString<T>() || typeof(T) == typeof(GUID);
+	private static bool IsValidDictionaryKey<T>() => IsString<T>() || typeof(T).IsPrimitive || typeof(T) == typeof(GUID);
 
 	private static class HashHelper
 	{
