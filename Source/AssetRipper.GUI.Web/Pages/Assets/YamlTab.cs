@@ -1,28 +1,22 @@
 ﻿using AssetRipper.Assets;
-using AssetRipper.Assets.Metadata;
-using AssetRipper.Export.UnityProjects;
+using AssetRipper.GUI.Web.Paths;
 
 namespace AssetRipper.GUI.Web.Pages.Assets;
 
-internal sealed class YamlTab(IUnityObjectBase asset) : HtmlTab
+internal sealed class YamlTab(IUnityObjectBase asset, AssetPath path) : AssetHtmlTab(asset)
 {
-	public string Text { get; } = GetYamlString(asset);
+	public string Url { get; } = AssetAPI.GetYamlUrl(path);
 	public string FileName { get; } = $"{asset.GetBestName()}.asset";
 	public override string DisplayName => Localization.Yaml;
 	public override string HtmlName => "yaml";
-	public override bool Enabled => !string.IsNullOrEmpty(Text);
+	public override bool Enabled => true;
 
 	public override void Write(TextWriter writer)
 	{
-		new Pre(writer).WithClass("bg-dark-subtle rounded-3 p-2").Close(Text);
+		new Pre(writer).WithClass("bg-dark-subtle rounded-3 p-2").WithDynamicTextContent(Url).Close();
 		using (new Div(writer).WithClass("text-center").End())
 		{
-			TextSaveButton.Write(writer, FileName, Text);
+			SaveButton.Write(writer, Url, FileName);
 		}
-	}
-
-	private static string GetYamlString(IUnityObjectBase asset)
-	{
-		return new StringYamlWalker().AppendEditor(asset, ExportIdHandler.GetMainExportID(asset)).ToString()!;
 	}
 }

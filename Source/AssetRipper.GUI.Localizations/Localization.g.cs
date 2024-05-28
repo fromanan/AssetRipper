@@ -771,6 +771,11 @@ partial class Localization
 	public static string Save => Get("save");
 	
 	/// <summary>
+	/// Save Raw Data
+	/// </summary>
+	public static string SaveRawData => Get("save_raw_data");
+	
+	/// <summary>
 	/// Save Settings to Disk
 	/// </summary>
 	public static string SaveSettingsToDisk => Get("save_settings_to_disk");
@@ -954,6 +959,11 @@ partial class Localization
 	/// Export the shader as a yaml asset. Experimental and only usable for viewing in the editor. The editor can randomly corrupt these files.
 	/// </summary>
 	public static string ShaderAssetFormatYamlDescription => Get("shader_asset_format_yaml_description");
+	
+	/// <summary>
+	/// Size
+	/// </summary>
+	public static string Size => Get("size");
 	
 	/// <summary>
 	/// Skip StreamingAssets Folder
