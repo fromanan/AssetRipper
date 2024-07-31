@@ -17,14 +17,14 @@ public sealed class MethodStubbingProcessor : IAssetProcessor
 
 		manager.ClearStreamCache();
 
-		foreach (ModuleDefinition module in manager.GetAssemblies().Where(m => m.TopLevelTypes.Count > 0))
+		foreach (ModuleDefinition module in manager.GetAssemblies().SelectMany(a => a.Modules).Where(m => m.TopLevelTypes.Count > 0))
 		{
 			foreach (TypeDefinition type in module.GetAllTypes())
 			{
 				//RemoveCompilerGeneratedNestedTypes(type);
 				foreach (MethodDefinition method in type.Methods)
 				{
-					method.FillMethodBodyWithStub();
+				   method.ReplaceMethodBodyWithMinimalImplementation();
 				}
 			}
 		}

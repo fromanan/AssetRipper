@@ -2,12 +2,12 @@ using AssetRipper.Assets;
 using AssetRipper.Assets.Bundles;
 using AssetRipper.Assets.Collections;
 using AssetRipper.Import.AssetCreation;
-using AssetRipper.Import.Configuration;
 using AssetRipper.Import.Logging;
 using AssetRipper.Import.Structure.Assembly.Managers;
 using AssetRipper.Import.Structure.Assembly.Serializable;
 using AssetRipper.IO.Files.SerializedFiles;
 using AssetRipper.Processing.AnimationClips;
+using AssetRipper.Processing.Configuration;
 using AssetRipper.SourceGenerated.Classes.ClassID_1;
 using AssetRipper.SourceGenerated.Classes.ClassID_142;
 using AssetRipper.SourceGenerated.Classes.ClassID_147;
@@ -156,7 +156,7 @@ namespace AssetRipper.Processing.Editor
 
 			bool HasMscorlib2()
 			{
-				return assemblyManager!.GetAssemblies().FirstOrDefault(a => a.Name == "mscorlib")?.Assembly?.Version.Major == 2;
+				return assemblyManager!.GetAssemblies().FirstOrDefault(a => a.Name == "mscorlib")?.Version.Major == 2;
 			}
 		}
 
