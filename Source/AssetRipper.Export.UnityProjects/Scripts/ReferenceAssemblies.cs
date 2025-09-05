@@ -1,65 +1,59 @@
-﻿using System.Text.RegularExpressions;
+﻿using AssetRipper.Import.Structure.Assembly.Managers;
+using System.Diagnostics;
 
-namespace AssetRipper.Export.UnityProjects.Scripts
+namespace AssetRipper.Export.UnityProjects.Scripts;
+
+public static class ReferenceAssemblies
 {
-	public static class ReferenceAssemblies
+	private static readonly AssemblyDataFile assemblyDataFile = AssemblyDataFile.Load();
+	private static UnityGuid UnityEngineGUID => new UnityGuid(0x1F55507F, 0xA1948D44, 0x4080F528, 0xC176C90E);
+
+	public static bool IsPredefinedAssembly(string assemblyName)
 	{
-		private static readonly Regex unityRegex = new Regex(@"^Unity(\.[0-9a-zA-Z]+)*(\.dll)?$", RegexOptions.Compiled);
-		private static readonly Regex unityEngineRegex = new Regex(@"^UnityEngine(\.[0-9a-zA-Z]+)*(\.dll)?$", RegexOptions.Compiled);
-		private static readonly Regex unityEditorRegex = new Regex(@"^UnityEditor(\.[0-9a-zA-Z]+)*(\.dll)?$", RegexOptions.Compiled);
-		private static readonly Regex systemRegex = new Regex(@"^System(\.[0-9a-zA-Z]+)*(\.dll)?$", RegexOptions.Compiled);
-		private static readonly HashSet<string> whitelistAssemblies = new HashSet<string>()
-		{
+		return assemblyName
+			is "Assembly-CSharp"
+			or "Assembly-CSharp-firstpass"
+			or "Assembly-CSharp-Editor"
+			or "Assembly-CSharp-Editor-firstpass"
+			or "Assembly-UnityScript"
+			or "Assembly-UnityScript-firstpass";
+	}
 
-		};
-		private static readonly HashSet<string> blacklistAssemblies = new HashSet<string>()
-		{
-			"mscorlib.dll",
-			"mscorlib",
-			"netstandard.dll",
-			"netstandard",
-			"Mono.Security.dll",
-			"Mono.Security"
-		};
-		private static readonly HashSet<string> predefinedAssemblies = new()
-		{
-			"Assembly-CSharp.dll",
-			"Assembly-CSharp",
-			"Assembly-CSharp-firstpass.dll",
-			"Assembly-CSharp-firstpass",
-			"Assembly-UnityScript.dll",
-			"Assembly-UnityScript",
-			"Assembly-UnityScript-firstpass.dll",
-			"Assembly-UnityScript-firstpass"
-		};
+	public static Dictionary<string, UnityGuid> GetReferenceAssemblies(IAssemblyManager assemblyManager, UnityVersion version)
+	{
+		Debug.Assert(assemblyDataFile.Assemblies.Count > 0);
 
-		public static bool IsPredefinedAssembly(string assemblyName)
+		AssemblyData assemblyData = assemblyDataFile.Get(version);
+
+		Dictionary<string, UnityGuid> referenceAssemblies = [];
+		foreach ((string assembly, UnityGuid guid) in assemblyData.UnityExtensions)
 		{
-			ArgumentNullException.ThrowIfNull(assemblyName);
-			return predefinedAssemblies.Contains(assemblyName);
+			referenceAssemblies.Add(assembly, guid);
+		}
+		foreach (string assembly in GetMonoAssemblies(assemblyManager, assemblyData))
+		{
+			referenceAssemblies.TryAdd(assembly, UnityEngineGUID);
+		}
+		foreach (string assembly in assemblyData.Unity)
+		{
+			referenceAssemblies.TryAdd(assembly, UnityEngineGUID);
 		}
 
-		public static bool IsReferenceAssembly(string assemblyName)
-		{
-			ArgumentNullException.ThrowIfNull(assemblyName);
+		// Todo: investigate why 5.4.0a0 does not have UnityEngine
+		referenceAssemblies.TryAdd("UnityEngine", UnityEngineGUID);
 
-			if (IsWhiteListAssembly(assemblyName))
+		return referenceAssemblies;
+
+		static IReadOnlyList<string> GetMonoAssemblies(IAssemblyManager assemblyManager, AssemblyData assemblyData)
+		{
+			if (assemblyManager.HasMscorlib2)
 			{
-				return false;
+				return assemblyData.Mono2.Count > 0 ? assemblyData.Mono2 : assemblyData.Mono4;
 			}
-
-			return IsBlackListAssembly(assemblyName)
-				|| IsUnityEngineAssembly(assemblyName)
-				//|| IsUnityAssembly(assemblyName)
-				|| IsSystemAssembly(assemblyName)
-				|| IsUnityEditorAssembly(assemblyName);
+			else
+			{
+				return assemblyData.Mono4.Count > 0 ? assemblyData.Mono4 : assemblyData.Mono2;
+			}
 		}
-
-		private static bool IsUnityAssembly(string assemblyName) => unityRegex.IsMatch(assemblyName);
-		public static bool IsUnityEngineAssembly(string assemblyName) => unityEngineRegex.IsMatch(assemblyName);
-		private static bool IsUnityEditorAssembly(string assemblyName) => unityEditorRegex.IsMatch(assemblyName);
-		private static bool IsSystemAssembly(string assemblyName) => systemRegex.IsMatch(assemblyName);
-		private static bool IsWhiteListAssembly(string assemblyName) => whitelistAssemblies.Contains(assemblyName);
-		private static bool IsBlackListAssembly(string assemblyName) => blacklistAssemblies.Contains(assemblyName);
 	}
 }

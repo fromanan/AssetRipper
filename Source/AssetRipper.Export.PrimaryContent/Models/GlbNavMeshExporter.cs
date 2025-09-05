@@ -1,5 +1,7 @@
 ﻿using AssetRipper.Assets;
 using AssetRipper.Assets.Generics;
+using AssetRipper.Export.Modules.Models;
+using AssetRipper.Import.Logging;
 using AssetRipper.SourceGenerated.Classes.ClassID_238;
 using AssetRipper.SourceGenerated.Subclasses.HeightMeshData;
 using AssetRipper.SourceGenerated.Subclasses.Vector3f;
@@ -7,6 +9,7 @@ using SharpGLTF.Geometry;
 using SharpGLTF.Geometry.VertexTypes;
 using SharpGLTF.Materials;
 using SharpGLTF.Scenes;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace AssetRipper.Export.PrimaryContent.Models;
@@ -15,7 +18,7 @@ public sealed class GlbNavMeshExporter : IContentExtractor
 {
 	public bool TryCreateCollection(IUnityObjectBase asset, [NotNullWhen(true)] out ExportCollectionBase? exportCollection)
 	{
-		if (asset is INavMeshData)
+		if (asset is INavMeshData { HeightMeshes: not null })
 		{
 			exportCollection = new GlbExportCollection(this, asset);
 			return true;
@@ -27,13 +30,20 @@ public sealed class GlbNavMeshExporter : IContentExtractor
 		}
 	}
 
-	public bool Export(IUnityObjectBase asset, string path)
+	public bool Export(IUnityObjectBase asset, string path, FileSystem fileSystem)
 	{
-		SceneBuilder sceneBuilder = new SceneBuilder();
+		SceneBuilder sceneBuilder = new();
 		AddAssetToSceneBuilder(sceneBuilder, (INavMeshData)asset);
-		using FileStream fileStream = File.Create(path);
-		sceneBuilder.ToGltf2().WriteGLB(fileStream);
-		return true;
+		using Stream fileStream = fileSystem.File.Create(path);
+		if (GlbWriter.TryWrite(sceneBuilder, fileStream, out string? errorMessage))
+		{
+			return true;
+		}
+		else
+		{
+			Logger.Error(LogCategory.Export, errorMessage);
+			return false;
+		}
 	}
 
 	private static void AddAssetToSceneBuilder(SceneBuilder sceneBuilder, INavMeshData asset)
@@ -41,7 +51,8 @@ public sealed class GlbNavMeshExporter : IContentExtractor
 		MaterialBuilder material = new MaterialBuilder("DefaultMaterial");
 		MeshBuilder<VertexPosition, VertexEmpty, VertexEmpty> meshBuilder = new();
 		PrimitiveBuilder<MaterialBuilder, VertexPosition, VertexEmpty, VertexEmpty> primitiveBuilder = meshBuilder.UsePrimitive(material);
-		
+
+		Debug.Assert(asset.HeightMeshes != null);
 		foreach (IHeightMeshData heightMeshData in asset.HeightMeshes)
 		{
 			AssetList<int> indices = heightMeshData.Indices;

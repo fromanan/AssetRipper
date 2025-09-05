@@ -1,5 +1,6 @@
 ﻿using AssetRipper.Assets;
 using AssetRipper.Export.Modules.Models;
+using AssetRipper.Import.Logging;
 using AssetRipper.SourceGenerated.Classes.ClassID_156;
 using SharpGLTF.Scenes;
 
@@ -21,11 +22,18 @@ public sealed class GlbTerrainExporter : IContentExtractor
 		}
 	}
 
-	public bool Export(IUnityObjectBase asset, string path)
+	public bool Export(IUnityObjectBase asset, string path, FileSystem fileSystem)
 	{
 		SceneBuilder sceneBuilder = GlbTerrainBuilder.Build((ITerrainData)asset);
-		using FileStream fileStream = File.Create(path);
-		sceneBuilder.ToGltf2().WriteGLB(fileStream);
-		return true;
+		using Stream fileStream = fileSystem.File.Create(path);
+		if (GlbWriter.TryWrite(sceneBuilder, fileStream, out string? errorMessage))
+		{
+			return true;
+		}
+		else
+		{
+			Logger.Error(LogCategory.Export, errorMessage);
+			return false;
+		}
 	}
 }

@@ -2,28 +2,26 @@
 using AssetRipper.Export.UnityProjects.Configuration;
 using AssetRipper.Import.Logging;
 using AssetRipper.Import.Structure.Assembly.Managers;
-using AssetRipper.IO.Files.Utils;
 using AssetRipper.Processing;
 
-namespace AssetRipper.Export.UnityProjects.Scripts
-{
-	public class DllPostExporter : IPostExporter
-	{
-		public void DoPostExport(GameData gameData, LibraryConfiguration settings)
-		{
-			string outputDirectory = Path.Combine(settings.AuxiliaryFilesPath, "GameAssemblies");
+namespace AssetRipper.Export.UnityProjects.Scripts;
 
-			Logger.Info(LogCategory.Export, "Saving game assemblies...");
-			IAssemblyManager assemblyManager = gameData.AssemblyManager;
-			AssemblyDefinition[] assemblies = assemblyManager.GetAssemblies().ToArray();
-			if (assemblies.Length != 0)
+public class DllPostExporter : IPostExporter
+{
+	public void DoPostExport(GameData gameData, LibraryConfiguration settings, FileSystem fileSystem)
+	{
+		Logger.Info(LogCategory.Export, "Saving game assemblies...");
+		IAssemblyManager assemblyManager = gameData.AssemblyManager;
+		AssemblyDefinition[] assemblies = assemblyManager.GetAssemblies().ToArray();
+		if (assemblies.Length != 0)
+		{
+			string outputDirectory = fileSystem.Path.Join(settings.AuxiliaryFilesPath, "GameAssemblies");
+
+			fileSystem.Directory.Create(outputDirectory);
+			foreach (AssemblyDefinition assembly in assemblies)
 			{
-				Directory.CreateDirectory(outputDirectory);
-				foreach (AssemblyDefinition assembly in assemblies)
-				{
-					string filepath = Path.Combine(outputDirectory, FilenameUtils.AddAssemblyFileExtension(assembly.Name!));
-					assemblyManager.SaveAssembly(assembly, filepath);
-				}
+				string filepath = fileSystem.Path.Join(outputDirectory, SpecialFileNames.AddAssemblyFileExtension(assembly.Name!));
+				assemblyManager.SaveAssembly(assembly, filepath, fileSystem);
 			}
 		}
 	}

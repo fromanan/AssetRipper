@@ -3,31 +3,40 @@ using AssetRipper.Import.Logging;
 using AssetRipper.Import.Structure.Platforms;
 using AssetRipper.Processing;
 
-namespace AssetRipper.Export.UnityProjects.Project
+namespace AssetRipper.Export.UnityProjects.Project;
+
+public class StreamingAssetsPostExporter : IPostExporter
 {
-	public class StreamingAssetsPostExporter : IPostExporter
+	public void DoPostExport(GameData gameData, LibraryConfiguration settings, FileSystem fileSystem)
 	{
-		public void DoPostExport(GameData gameData, LibraryConfiguration settings)
+		PlatformGameStructure? platform = gameData.PlatformStructure;
+		if (platform is null)
 		{
-			PlatformGameStructure? platform = gameData.PlatformStructure;
-			if (platform is not null && !string.IsNullOrEmpty(platform.StreamingAssetsPath) && Directory.Exists(platform.StreamingAssetsPath))
+			return;
+		}
+
+		string? inputDirectory = platform.StreamingAssetsPath;
+		if (!string.IsNullOrEmpty(inputDirectory) && platform.FileSystem.Directory.Exists(inputDirectory))
+		{
+			Logger.Info(LogCategory.Export, "Copying streaming assets...");
+			string outputDirectory = fileSystem.Path.Join(settings.AssetsPath, "StreamingAssets");
+
+			fileSystem.Directory.Create(outputDirectory);
+
+			foreach (string directory in platform.FileSystem.Directory.EnumerateDirectories(inputDirectory, "*", SearchOption.AllDirectories))
 			{
-				Logger.Info(LogCategory.Export, "Copying streaming assets...");
-				string inputDirectory = platform.StreamingAssetsPath;
-				string outputDirectory = Path.Combine(settings.AssetsPath, "StreamingAssets");
+				string relativePath = platform.FileSystem.Path.GetRelativePath(inputDirectory, directory);
+				fileSystem.Directory.Create(fileSystem.Path.Join(outputDirectory, relativePath));
+			}
 
-				Directory.CreateDirectory(outputDirectory);
+			foreach (string file in platform.FileSystem.Directory.EnumerateFiles(inputDirectory, "*", SearchOption.AllDirectories))
+			{
+				string relativePath = platform.FileSystem.Path.GetRelativePath(inputDirectory, file);
+				string newFile = fileSystem.Path.Join(outputDirectory, relativePath);
 
-				foreach (string directory in Directory.EnumerateDirectories(inputDirectory, "*", SearchOption.AllDirectories))
-				{
-					Directory.CreateDirectory(Path.Combine(outputDirectory, Path.GetRelativePath(inputDirectory, directory)));
-				}
-
-				foreach (string file in Directory.EnumerateFiles(inputDirectory, "*", SearchOption.AllDirectories))
-				{
-					string newFile = Path.Combine(outputDirectory, Path.GetRelativePath(inputDirectory, file));
-					File.Copy(file, newFile, true);
-				}
+				using Stream readStream = platform.FileSystem.File.OpenRead(file);
+				using Stream writeStream = fileSystem.File.Create(newFile);
+				readStream.CopyTo(writeStream);
 			}
 		}
 	}

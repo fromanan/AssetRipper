@@ -4,7 +4,6 @@ using AssetRipper.IO.Files;
 using AssetRipper.IO.Files.ResourceFiles;
 using AssetRipper.IO.Files.SerializedFiles;
 using AssetRipper.IO.Files.SerializedFiles.Parser;
-using AssetRipper.IO.Files.Utils;
 
 namespace AssetRipper.Assets.Bundles;
 
@@ -109,7 +108,7 @@ public abstract class Bundle : IDisposable
 			return result;
 		}
 
-		string fixedName = FilenameUtils.FixFileIdentifier(name);
+		string fixedName = SpecialFileNames.FixFileIdentifier(name);
 		result = ResolveInternal(fixedName);
 		if (result is not null)
 		{
@@ -118,10 +117,10 @@ public abstract class Bundle : IDisposable
 
 		return fixedName switch
 		{
-			FilenameUtils.DefaultResourceName1 => ResolveInternal(FilenameUtils.DefaultResourceName2),
-			FilenameUtils.DefaultResourceName2 => ResolveInternal(FilenameUtils.DefaultResourceName1),
-			FilenameUtils.BuiltinExtraName1 => ResolveInternal(FilenameUtils.BuiltinExtraName2),
-			FilenameUtils.BuiltinExtraName2 => ResolveInternal(FilenameUtils.BuiltinExtraName1),
+			SpecialFileNames.DefaultResourceName1 => ResolveInternal(SpecialFileNames.DefaultResourceName2),
+			SpecialFileNames.DefaultResourceName2 => ResolveInternal(SpecialFileNames.DefaultResourceName1),
+			SpecialFileNames.BuiltinExtraName1 => ResolveInternal(SpecialFileNames.BuiltinExtraName2),
+			SpecialFileNames.BuiltinExtraName2 => ResolveInternal(SpecialFileNames.BuiltinExtraName1),
 			_ => null,
 		};
 
@@ -153,7 +152,15 @@ public abstract class Bundle : IDisposable
 		static AssetCollection? TryResolveFromCollections(Bundle currentBundle, string name)
 		{
 			//Uniqueness is not guaranteed because of asset bundle variants
-			return currentBundle.Collections.FirstOrDefault(c => c.Name == name);
+			foreach (AssetCollection collection in currentBundle.Collections)
+			{
+				if (collection.Name == name)
+				{
+					return collection;
+				}
+			}
+
+			return null;
 		}
 
 		/// <summary>
@@ -165,10 +172,15 @@ public abstract class Bundle : IDisposable
 		/// <returns>The resolved <see cref="AssetCollection"/> if it exists, else null.</returns>
 		static AssetCollection? TryResolveFromChildBundles(Bundle currentBundle, string name, Bundle? bundleToExclude)
 		{
-			return currentBundle.Bundles
-				.Where(b => b != bundleToExclude)
-				.Select(b => TryResolveFromCollections(b, name))
-				.FirstOrDefault(c => c is not null);
+			foreach (Bundle bundle in currentBundle.Bundles)
+			{
+				if (bundle != bundleToExclude && TryResolveFromCollections(bundle, name) is { } collection)
+				{
+					return collection;
+				}
+			}
+
+			return null;
 		}
 	}
 
@@ -185,7 +197,7 @@ public abstract class Bundle : IDisposable
 		}
 
 		string originalName = name;
-		string fixedName = FilenameUtils.FixFileIdentifier(name);
+		string fixedName = SpecialFileNames.FixFileIdentifier(name);
 
 		Bundle? bundleToExclude = null;
 		Bundle? currentBundle = this;
@@ -214,7 +226,15 @@ public abstract class Bundle : IDisposable
 		static ResourceFile? TryResolveFromResources(Bundle currentBundle, string fixedName)
 		{
 			//Uniqueness is not guaranteed because of asset bundle variants
-			return currentBundle.Resources.FirstOrDefault(c => c.NameFixed == fixedName);
+			foreach (ResourceFile resource in currentBundle.Resources)
+			{
+				if (resource.NameFixed == fixedName)
+				{
+					return resource;
+				}
+			}
+
+			return null;
 		}
 
 		/// <summary>
@@ -227,10 +247,15 @@ public abstract class Bundle : IDisposable
 		/// <returns>The resolved ResourceFile if it exists, else null.</returns>
 		static ResourceFile? TryResolveFromChildBundles(Bundle currentBundle, string originalName, string fixedName, Bundle? bundleToExclude)
 		{
-			return currentBundle.Bundles
-				.Where(b => b != bundleToExclude)
-				.Select(b => TryResolveFromResources(b, fixedName))
-				.FirstOrDefault(r => r is not null);
+			foreach (Bundle bundle in currentBundle.Bundles)
+			{
+				if (bundle != bundleToExclude && TryResolveFromResources(bundle, fixedName) is { } resource)
+				{
+					return resource;
+				}
+			}
+
+			return null;
 		}
 	}
 

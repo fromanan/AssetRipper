@@ -3,14 +3,13 @@ using AssetRipper.Assets.Bundles;
 using AssetRipper.Assets.Collections;
 using AssetRipper.IO.Files;
 using AssetRipper.IO.Files.SerializedFiles;
-using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace AssetRipper.Tools.JsonSerializer;
 
 internal static class Program
 {
-	private static readonly string outputDirectory = Path.Combine(AppContext.BaseDirectory, "Output");
+	private static readonly string outputDirectory = Path.Join(AppContext.BaseDirectory, "Output");
 
 	static void Main(string[] args)
 	{
@@ -95,7 +94,7 @@ internal static class Program
 			//Note: this assigns assetObject as the parent of Contents.
 			//Normally, this would be a cause for concern, but the asset won't be used after this.
 		}
-		using FileStream stream = File.Create(Path.Combine(outputDirectory, $"{file.NameFixed}.json"));
+		using FileStream stream = File.Create(Path.Join(outputDirectory, $"{file.NameFixed}.json"));
 		System.Text.Json.JsonSerializer.Serialize(stream, root, JsonObjectSerializerContext.Default.JsonObject);
 	}
 }

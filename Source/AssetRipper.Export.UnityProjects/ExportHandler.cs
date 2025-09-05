@@ -6,15 +6,14 @@ using AssetRipper.Export.UnityProjects.Scripts;
 using AssetRipper.Import.Configuration;
 using AssetRipper.Import.Logging;
 using AssetRipper.Import.Structure;
-using AssetRipper.IO.Files;
-using AssetRipper.IO.Files.SerializedFiles;
 using AssetRipper.Processing;
 using AssetRipper.Processing.AnimatorControllers;
 using AssetRipper.Processing.Assemblies;
 using AssetRipper.Processing.AudioMixers;
 using AssetRipper.Processing.Editor;
-using AssetRipper.Processing.PrefabOutlining;
+using AssetRipper.Processing.Prefabs;
 using AssetRipper.Processing.Scenes;
+using AssetRipper.Processing.ScriptableObject;
 using AssetRipper.Processing.Textures;
 
 namespace AssetRipper.Export.UnityProjects;
@@ -57,26 +56,42 @@ public class ExportHandler
 
 	protected virtual IEnumerable<IAssetProcessor> GetProcessors()
 	{
+		// Assembly processors
+		yield return new AttributePolyfillGenerator();
+		yield return new MonoExplicitPropertyRepairProcessor();
+		yield return new ObfuscationRepairProcessor();
+		yield return new ForwardingAssemblyGenerator();
 		if (Settings.ImportSettings.ScriptContentLevel == ScriptContentLevel.Level1)
 		{
 			yield return new MethodStubbingProcessor();
 		}
+		yield return new NullRefReturnProcessor(Settings.ImportSettings.ScriptContentLevel);
+		yield return new UnmanagedConstraintRecoveryProcessor();
+		if (Settings.ProcessingSettings.RemoveNullableAttributes)
+		{
+			yield return new NullableRemovalProcessor();
+		}
+		if (Settings.ProcessingSettings.PublicizeAssemblies)
+		{
+			yield return new SafeAssemblyPublicizingProcessor();
+		}
+		yield return new RemoveAssemblyKeyFileAttributeProcessor();
+		yield return new InternalsVisibileToPublicKeyRemover();
+
 		yield return new SceneDefinitionProcessor();
 		yield return new MainAssetProcessor();
 		yield return new AnimatorControllerProcessor();
 		yield return new AudioMixerProcessor();
 		yield return new EditorFormatProcessor(Settings.ProcessingSettings.BundledAssetsExportMode);
 		//Static mesh separation goes here
-		if (Settings.ProcessingSettings.EnablePrefabOutlining)
-		{
-			yield return new PrefabOutliningProcessor();
-		}
 		yield return new LightingDataProcessor();//Needs to be after static mesh separation
 		yield return new PrefabProcessor();
 		yield return new SpriteProcessor();
+		yield return new ScriptableObjectProcessor();
 	}
 
-	public void Export(GameData gameData, string outputPath)
+	public void Export(GameData gameData, string outputPath) => Export(gameData, outputPath, LocalFileSystem.Instance);
+	public void Export(GameData gameData, string outputPath, FileSystem fileSystem)
 	{
 		Logger.Info(LogCategory.Export, "Starting export");
 		Logger.Info(LogCategory.Export, $"Attempting to export assets to {outputPath}...");
@@ -84,18 +99,18 @@ public class ExportHandler
 		Logger.Info(LogCategory.Export, $"Exporting to Unity version {gameData.ProjectVersion}");
 
 		Settings.ExportRootPath = outputPath;
-		Settings.SetProjectSettings(gameData.ProjectVersion, BuildTarget.NoTarget, TransferInstructionFlags.NoTransferInstructionFlags);
+		Settings.SetProjectSettings(gameData.ProjectVersion);
 
 		ProjectExporter projectExporter = new(Settings, gameData.AssemblyManager);
 		BeforeExport(projectExporter);
 		projectExporter.DoFinalOverrides(Settings);
-		projectExporter.Export(gameData.GameBundle, Settings);
+		projectExporter.Export(gameData.GameBundle, Settings, fileSystem);
 
 		Logger.Info(LogCategory.Export, "Finished exporting assets");
 
 		foreach (IPostExporter postExporter in GetPostExporters())
 		{
-			postExporter.DoPostExport(gameData, Settings);
+			postExporter.DoPostExport(gameData, Settings, fileSystem);
 		}
 		Logger.Info(LogCategory.Export, "Finished post-export");
 

@@ -1,6 +1,7 @@
 ﻿using AssetRipper.Assets;
 using AssetRipper.Export.Modules.Models;
-using AssetRipper.Processing;
+using AssetRipper.Import.Logging;
+using AssetRipper.Processing.Prefabs;
 using SharpGLTF.Scenes;
 
 namespace AssetRipper.Export.PrimaryContent.Models;
@@ -23,16 +24,23 @@ public class GlbModelExporter : IContentExtractor
 		}
 	}
 
-	public bool Export(IEnumerable<IUnityObjectBase> assets, string path)
+	public bool Export(IEnumerable<IUnityObjectBase> assets, string path, FileSystem fileSystem)
 	{
-		return ExportModel(assets, path, false); //Called by the prefab exporter
+		return ExportModel(assets, path, false, fileSystem); //Called by the prefab exporter
 	}
 
-	public static bool ExportModel(IEnumerable<IUnityObjectBase> assets, string path, bool isScene)
+	public static bool ExportModel(IEnumerable<IUnityObjectBase> assets, string path, bool isScene, FileSystem fileSystem)
 	{
 		SceneBuilder sceneBuilder = GlbLevelBuilder.Build(assets, isScene);
-		using FileStream fileStream = File.Create(path);
-		sceneBuilder.ToGltf2().WriteGLB(fileStream);
-		return true;
+		using Stream fileStream = fileSystem.File.Create(path);
+		if (GlbWriter.TryWrite(sceneBuilder, fileStream, out string? errorMessage))
+		{
+			return true;
+		}
+		else
+		{
+			Logger.Error(LogCategory.Export, errorMessage);
+			return false;
+		}
 	}
 }

@@ -2,34 +2,57 @@ namespace AssetRipper.SerializationLogic.Tests;
 
 public class FieldSerializationTests
 {
-	[Test]
-	public void ResolutionForUnityTypesWorksAsExpected()
+	private class CustomMonoBehaviourWithPrivateFields : UnityEngine.MonoBehaviour
 	{
-		TypeDefinition customMonoBehaviour = ReferenceAssemblies.GetType<CustomMonoBehaviourWithListField>();
-		FieldDefinition field = customMonoBehaviour.Fields.Single();
-		Assert.Multiple(() =>
-		{
-			Assert.That(FieldSerializationLogic.HasSerializeFieldAttribute(field), "Could not detect the SerializeField attribute.");
-			Assert.That(FieldSerializationLogic.WillUnitySerialize(field));
-		});
+		[UnityEngine.SerializeField]
+		private int field1;
+
+		private int field2; // Not serialized
 	}
 
 	[Test]
-	public void DeserializationSupportsGenericTypes()
+	public void PrivateFieldsAreCorrectlyDiscriminated()
 	{
-		TypeDefinition customMonoBehaviour = ReferenceAssemblies.GetType<CustomMonoBehaviourWithGenericField>();
-		FieldDefinition field = customMonoBehaviour.Fields.Single();
-		
-		//This isn't the best check because it doesn't validate if we actually support deserializing the type, but it's a start.
-		Assert.That(FieldSerializationLogic.WillUnitySerialize(field));
+		SerializableType serializableType = SerializableTypes.Create<CustomMonoBehaviourWithPrivateFields>();
+		Assert.That(serializableType.Fields, Has.Count.EqualTo(1));
+		SerializableType.Field field = serializableType.Fields[0];
+		Assert.That(field.Name, Is.EqualTo("field1"));
+	}
+
+	private class CustomMonoBehaviourWithPublicFields : UnityEngine.MonoBehaviour
+	{
+		[NonSerialized]
+		public int field1;
+
+		public int field2;
+	}
+
+	[Test]
+	public void PublicFieldsAreCorrectlyDiscriminated()
+	{
+		SerializableType serializableType = SerializableTypes.Create<CustomMonoBehaviourWithPublicFields>();
+		Assert.That(serializableType.Fields, Has.Count.EqualTo(1));
+		SerializableType.Field field = serializableType.Fields[0];
+		Assert.That(field.Name, Is.EqualTo(nameof(CustomMonoBehaviourWithPublicFields.field2)));
 	}
 
 	private class CustomMonoBehaviourWithListField : UnityEngine.MonoBehaviour
 	{
-		[UnityEngine.SerializeField]
-		[SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "Required for unit tests")]
-		[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Required for unit tests")]
-		private List<string>? listOfStrings;
+		public List<string>? listOfStrings;
+	}
+
+	[Test]
+	public void ResolutionForUnityTypesWorksAsExpected()
+	{
+		SerializableType serializableType = SerializableTypes.Create<CustomMonoBehaviourWithListField>();
+		Assert.That(serializableType.Fields, Has.Count.EqualTo(1));
+		SerializableType.Field field = serializableType.Fields[0];
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(field.Name, Is.EqualTo(nameof(CustomMonoBehaviourWithListField.listOfStrings)));
+			Assert.That(field.Type.Type, Is.EqualTo(PrimitiveType.String));
+			Assert.That(field.ArrayDepth, Is.EqualTo(1));
+		}
 	}
 
 	[Serializable]
@@ -41,5 +64,72 @@ public class FieldSerializationTests
 	private class CustomMonoBehaviourWithGenericField : UnityEngine.MonoBehaviour
 	{
 		public TestGenericClass<string>? testGenericClass;
+	}
+
+	[Test]
+	public void DeserializationSupportsGenericTypes()
+	{
+		SerializableType serializableType = SerializableTypes.Create<CustomMonoBehaviourWithGenericField>();
+
+		Assert.That(serializableType.Fields, Has.Count.EqualTo(1));
+		SerializableType.Field field = serializableType.Fields[0];
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(field.Name, Is.EqualTo(nameof(CustomMonoBehaviourWithGenericField.testGenericClass)));
+			Assert.That(field.Type.Type, Is.EqualTo(PrimitiveType.Complex));
+			Assert.That(field.ArrayDepth, Is.Zero);
+			Assert.That(field.Type.Fields, Has.Count.EqualTo(1));
+		}
+		SerializableType.Field subField = field.Type.Fields[0];
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(subField.Name, Is.EqualTo(nameof(TestGenericClass<>.listOfT)));
+			Assert.That(subField.Type.Type, Is.EqualTo(PrimitiveType.String));
+			Assert.That(subField.ArrayDepth, Is.EqualTo(1));
+		}
+	}
+
+	private class CustomMonoBehaviourWithObjectField : UnityEngine.MonoBehaviour
+	{
+		public UnityEngine.Object? pptr;
+	}
+
+	private class CustomMonoBehaviourWithMonoBehaviourField : UnityEngine.MonoBehaviour
+	{
+		public UnityEngine.Object? pptr;
+	}
+
+	private abstract class GenericAbstractMonoBehaviour<T> : UnityEngine.MonoBehaviour
+	{
+	}
+
+	private class NonGenericDerivedMonoBehaviour : GenericAbstractMonoBehaviour<int>
+	{
+	}
+
+	private class CustomMonoBehaviourWithNonGenericDerivedMonoBehaviourField : UnityEngine.MonoBehaviour
+	{
+		public NonGenericDerivedMonoBehaviour? pptr;
+	}
+
+	private class CustomMonoBehaviourWithGenericAbstractMonoBehaviourField : UnityEngine.MonoBehaviour
+	{
+		public GenericAbstractMonoBehaviour<int>? pptr;
+	}
+
+	[TestCase(typeof(CustomMonoBehaviourWithObjectField))]
+	[TestCase(typeof(CustomMonoBehaviourWithMonoBehaviourField))]
+	[TestCase(typeof(CustomMonoBehaviourWithNonGenericDerivedMonoBehaviourField))]
+	[TestCase(typeof(CustomMonoBehaviourWithGenericAbstractMonoBehaviourField))]
+	public void DeserializationSupportsPPtrFields(Type type)
+	{
+		SerializableType serializableType = SerializableTypes.Create(type);
+		Assert.That(serializableType.Fields, Has.Count.EqualTo(1));
+		SerializableType.Field field = serializableType.Fields[0];
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(field.Type, Is.EqualTo(SerializablePointerType.Shared));
+			Assert.That(field.ArrayDepth, Is.Zero);
+		}
 	}
 }

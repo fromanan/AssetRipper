@@ -1,7 +1,5 @@
 ﻿using AssetRipper.Import.Logging;
 using AssetRipper.Import.Utils;
-using AssetRipper.IO.Files;
-using AssetRipper.IO.Files.SerializedFiles;
 using System.Diagnostics;
 
 namespace AssetRipper.Import.Configuration;
@@ -17,7 +15,7 @@ public class CoreConfiguration
 	public ImportSettings ImportSettings
 	{
 		get => SingletonData.GetStoredValue<ImportSettings>(nameof(ImportSettings));
-		set => SingletonData.GetValue<JsonDataInstance<ImportSettings>>(nameof(ImportSettings)).Value = value;
+		set => SingletonData.SetStoredValue(nameof(ImportSettings), value);
 	}
 
 	#endregion
@@ -30,16 +28,14 @@ public class CoreConfiguration
 	/// <summary>
 	/// The path to create a new unity project in
 	/// </summary>
-	public string ProjectRootPath => Path.Combine(ExportRootPath, "ExportedProject");
-	public string AssetsPath => Path.Combine(ProjectRootPath, "Assets");
-	public string ProjectSettingsPath => Path.Combine(ProjectRootPath, "ProjectSettings");
-	public string AuxiliaryFilesPath => Path.Combine(ExportRootPath, "AuxiliaryFiles");
+	public string ProjectRootPath => Path.Join(ExportRootPath, "ExportedProject");
+	public string AssetsPath => Path.Join(ProjectRootPath, "Assets");
+	public string ProjectSettingsPath => Path.Join(ProjectRootPath, "ProjectSettings");
+	public string AuxiliaryFilesPath => Path.Join(ExportRootPath, "AuxiliaryFiles");
 	#endregion
 
 	#region Project Settings
 	public UnityVersion Version { get; private set; }
-	public BuildTarget Platform { get; private set; }
-	public TransferInstructionFlags Flags { get; private set; }
 	#endregion
 
 	public SingletonDataStorage SingletonData { get; } = new();
@@ -52,11 +48,9 @@ public class CoreConfiguration
 		SingletonData.Add(nameof(ImportSettings), new JsonDataInstance<ImportSettings>(ImportSettingsContext.Default.ImportSettings));
 	}
 
-	public void SetProjectSettings(UnityVersion version, BuildTarget platform, TransferInstructionFlags flags)
+	public void SetProjectSettings(UnityVersion version)
 	{
 		Version = version;
-		Platform = platform;
-		Flags = flags;
 	}
 
 	public virtual void ResetToDefaultValues()

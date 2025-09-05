@@ -2,8 +2,9 @@
 using AssetRipper.Import.Logging;
 using AssetRipper.Import.Structure.Assembly;
 using AssetRipper.Import.Structure.Assembly.Managers;
-using AssetRipper.Import.Structure.Assembly.Serializable;
 using AssetRipper.Import.Structure.Platforms;
+using AssetRipper.Primitives;
+using AssetRipper.SerializationLogic;
 
 namespace AssetRipper.Tools.MonoBehaviourTester;
 
@@ -15,7 +16,7 @@ internal static class Program
 	public static int Main(string[] args)
 	{
 		Logger.Add(new ConsoleLogger(false));
-		
+
 		if (args.Length < 3)
 		{
 			Logger.Error($"Usage: {Path.GetFileName(Environment.ProcessPath)} <game path> <mono behavior assembly> <mono behavior FQN>");
@@ -25,9 +26,9 @@ internal static class Program
 		string gamePath = args[0];
 		string monoBehaviorAssembly = args[1];
 		string monoBehaviorFQN = args[2];
-		
+
 		Logger.Info("Determining platform...");
-		
+
 		PlatformChecker.CheckPlatform(new() { gamePath }, out PlatformGameStructure? platformStructure, out MixedGameStructure? _);
 		if (platformStructure == null)
 		{
@@ -37,11 +38,11 @@ internal static class Program
 
 		PlatformStructure = platformStructure;
 		PlatformStructure.CollectFiles(true);
-		
+
 		ScriptingBackend backend = PlatformStructure.Backend;
-		
+
 		Logger.Info("Initializing assembly manager...");
-		
+
 		AssemblyManager = backend switch
 		{
 			ScriptingBackend.Mono => new MonoManager(OnRequestAssembly),
@@ -60,7 +61,7 @@ internal static class Program
 			Logger.Error(ex);
 			AssemblyManager = new BaseManager(OnRequestAssembly);
 		}
-		
+
 		Logger.Info("Parsing requested type name...");
 
 		string ns = string.Empty;
@@ -73,12 +74,12 @@ internal static class Program
 		}
 
 		Logger.Info($"Building serializable type for namespace: {ns}, type: {type}, assembly: {monoBehaviorAssembly}...");
-		
+
 		ScriptIdentifier typeId = new(monoBehaviorAssembly, ns, type);
 
 		try
 		{
-			if (AssemblyManager.TryGetSerializableType(typeId, out SerializableType? serializableType, out string? failureReason))
+			if (AssemblyManager.TryGetSerializableType(typeId, UnityVersion.MaxVersion, out SerializableType? serializableType, out string? failureReason))
 			{
 				Logger.Info($"Got serializable type: {serializableType}");
 				PrintSerializationInfo(serializableType);
@@ -116,13 +117,13 @@ internal static class Program
 		foreach (SerializableType.Field field in type.Fields)
 		{
 			string typeName = field.Type.ToString();
-			if (field.IsArray)
+			if (field.ArrayDepth > 0)
 			{
 				typeName += string.Join("", Enumerable.Repeat("[]", field.ArrayDepth));
 			}
 
 			string ptrString = field.Type.IsEnginePointer() ? ", serialized as engine pointer" : "";
-			
+
 			Logger.Info("".PadLeft(indent * 4) + $"{field.Name} ({typeName}, {field.Type.Type}{ptrString})");
 
 			if (field.Type.Type == PrimitiveType.Complex)
