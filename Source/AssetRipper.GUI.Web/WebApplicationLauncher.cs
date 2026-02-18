@@ -6,6 +6,7 @@ using AssetRipper.GUI.Web.Pages.Collections;
 using AssetRipper.GUI.Web.Pages.FailedFiles;
 using AssetRipper.GUI.Web.Pages.Resources;
 using AssetRipper.GUI.Web.Pages.Scenes;
+using AssetRipper.GUI.Web.Pages.Search;
 using AssetRipper.GUI.Web.Pages.Settings;
 using AssetRipper.GUI.Web.Paths;
 using AssetRipper.Import.Logging;
@@ -31,9 +32,9 @@ public static class WebApplicationLauncher
 	internal static class Defaults
 	{
 		public const int Port = 0;
-		public const bool LaunchBrowser = true;
 		public const bool Log = true;
 		public const string? LogPath = null;
+		public const bool Headless = false;
 	}
 
 	public static void Launch(string[] args)
@@ -64,11 +65,13 @@ public static class WebApplicationLauncher
 			}
 		}
 
-		Launch(arguments.Port, arguments.LaunchBrowser, arguments.Log, arguments.LogPath);
+		Launch(arguments.Port, arguments.Headless, arguments.Log, arguments.LogPath);
 	}
 
-	public static void Launch(int port = Defaults.Port, bool launchBrowser = Defaults.LaunchBrowser, bool log = Defaults.Log, string? logPath = Defaults.LogPath)
+	public static void Launch(int port = Defaults.Port, bool headless = Defaults.Headless, bool log = Defaults.Log, string? logPath = Defaults.LogPath)
 	{
+		GameFileLoader.Headless = headless;
+
 		WelcomeMessage.Print();
 
 		if (log)
@@ -122,7 +125,7 @@ public static class WebApplicationLauncher
 #if !DEBUG
 		app.UseMiddleware<ErrorHandlingMiddleware>();
 #endif
-		if (launchBrowser)
+		if (!headless)
 		{
 			app.Lifetime.ApplicationStarted.Register(() =>
 			{
@@ -160,6 +163,7 @@ public static class WebApplicationLauncher
 		app.MapGet("/Commands", CommandsPage.Instance.ToResult).ProducesHtmlPage();
 		app.MapGet("/Privacy", PrivacyPage.Instance.ToResult).ProducesHtmlPage();
 		app.MapGet("/Licenses", LicensesPage.Instance.ToResult).ProducesHtmlPage();
+		app.MapGet("/PremiumFeatures", PremiumFeaturesPage.Instance.ToResult).ProducesHtmlPage();
 
 		app.MapGet("/ConfigurationFiles", (context) =>
 		{
@@ -228,6 +232,9 @@ public static class WebApplicationLauncher
 		app.MapGet(ResourceAPI.Urls.View, ResourceAPI.GetView).ProducesHtmlPage();
 		app.MapGet(ResourceAPI.Urls.Data, ResourceAPI.GetData)
 			.Produces<byte[]>(contentType: "application/octet-stream");
+
+		//Search
+		app.MapGet(SearchAPI.Urls.View, SearchAPI.GetView).ProducesHtmlPage();
 
 		//Scenes
 		app.MapGet(SceneAPI.Urls.View, SceneAPI.GetView).ProducesHtmlPage();

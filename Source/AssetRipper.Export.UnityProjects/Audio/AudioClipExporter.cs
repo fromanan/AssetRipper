@@ -1,6 +1,6 @@
 ﻿using AssetRipper.Assets;
+using AssetRipper.Export.Configuration;
 using AssetRipper.Export.Modules.Audio;
-using AssetRipper.Export.UnityProjects.Configuration;
 using AssetRipper.Import.Logging;
 using AssetRipper.SourceGenerated.Classes.ClassID_83;
 
@@ -9,7 +9,7 @@ namespace AssetRipper.Export.UnityProjects.Audio;
 public sealed class AudioClipExporter : BinaryAssetExporter
 {
 	public AudioExportFormat AudioFormat { get; }
-	public AudioClipExporter(LibraryConfiguration configuration) => AudioFormat = configuration.ExportSettings.AudioExportFormat;
+	public AudioClipExporter(FullConfiguration configuration) => AudioFormat = configuration.ExportSettings.AudioExportFormat;
 
 	public static bool IsSupportedExportFormat(AudioExportFormat format) => format switch
 	{

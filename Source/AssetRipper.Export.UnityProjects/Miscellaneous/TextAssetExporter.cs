@@ -1,5 +1,5 @@
 using AssetRipper.Assets;
-using AssetRipper.Export.UnityProjects.Configuration;
+using AssetRipper.Export.Configuration;
 using AssetRipper.SourceGenerated.Classes.ClassID_49;
 
 namespace AssetRipper.Export.UnityProjects.Miscellaneous;
@@ -7,7 +7,7 @@ namespace AssetRipper.Export.UnityProjects.Miscellaneous;
 public sealed class TextAssetExporter : BinaryAssetExporter
 {
 	public TextExportMode ExportMode { get; }
-	public TextAssetExporter(LibraryConfiguration configuration)
+	public TextAssetExporter(FullConfiguration configuration)
 	{
 		ExportMode = configuration.ExportSettings.TextExportMode;
 	}

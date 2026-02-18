@@ -19,13 +19,15 @@ public sealed class MonoManager : BaseManager
 		{
 			try
 			{
-				if (!PEFile.FromFile(assemblyPath).OptionalHeader.GetDataDirectory(DataDirectoryIndex.ClrDirectory).IsPresentInPE)
+				using Stream stream = gameStructure.FileSystem.File.OpenRead(assemblyPath);
+				PEFile peFile = PEFile.FromStream(stream);
+				if (!peFile.OptionalHeader.GetDataDirectory(DataDirectoryIndex.ClrDirectory).IsPresentInPE)
 				{
 					Logger.Info(LogCategory.Import, $"Skipping native assembly: {assemblyName}");
 				}
 				else
 				{
-					Load(assemblyPath);
+					Load(assemblyPath, gameStructure.FileSystem);
 				}
 			}
 			catch (BadImageFormatException)

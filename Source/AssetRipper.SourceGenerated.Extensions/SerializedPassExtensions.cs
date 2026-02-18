@@ -44,4 +44,14 @@ public static class SerializedPassExtensions
 			yield return pass.ProgRayTracing;
 		}
 	}
+
+	public static int MaxShaderModelVersion(this ISerializedPass pass, UnityVersion version)
+	{
+		int maxVersion = 0;
+		foreach (ISerializedProgram program in pass.GetPrograms())
+		{
+			maxVersion = int.Max(maxVersion, program.MaxShaderModelVersion(version));
+		}
+		return maxVersion;
+	}
 }

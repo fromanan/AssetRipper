@@ -1,7 +1,4 @@
-﻿using AssetRipper.IO.Files.Streams.MultiFile;
-using AssetRipper.IO.Files.Utils;
-
-namespace AssetRipper.IO.Files.Streams.Smart;
+﻿namespace AssetRipper.IO.Files.Streams.Smart;
 
 public sealed partial class SmartStream : Stream
 {
@@ -22,14 +19,19 @@ public sealed partial class SmartStream : Stream
 		Assign(copy);
 	}
 
-	public static SmartStream OpenRead(string path)
+	public static SmartStream OpenRead(string path, FileSystem fileSystem)
 	{
-		return new SmartStream(MultiFileStream.OpenRead(path));
+		return new SmartStream(fileSystem.File.OpenRead(path));
+	}
+
+	public static SmartStream OpenReadMulti(string path, FileSystem fileSystem)
+	{
+		return new SmartStream(MultiFileStream.OpenRead(path, fileSystem));
 	}
 
 	public static SmartStream CreateTemp()
 	{
-		string tempFile = TemporaryFileStorage.CreateTemporaryFile();
+		string tempFile = LocalFileSystem.Instance.File.CreateTemporary();
 		return new SmartStream(new FileStream(tempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.None, 4096, FileOptions.DeleteOnClose));
 	}
 
@@ -91,6 +93,41 @@ public sealed partial class SmartStream : Stream
 	public SmartStream CreateReference()
 	{
 		return new SmartStream(this);
+	}
+
+	[MemberNotNull(nameof(Stream))]
+	public SmartStream CreatePartial(long offset, long size)
+	{
+		ThrowIfNull();
+
+		// Create a partial stream if the base stream is compatible with RandomAccessStream.
+		RandomAccessStream? partialStream = Stream switch
+		{
+			// root case
+			FileStream fileStream => new RandomAccessStream(fileStream, offset, size),
+
+			// branch case
+			RandomAccessStream parentPartial => new RandomAccessStream(
+				parentPartial.Parent,
+				parentPartial.BaseOffset + offset,
+				size),
+
+			// incompatible
+			_ => null
+		};
+
+		if (partialStream is not null)
+		{
+			return new SmartStream(this) { Stream = partialStream };
+		}
+
+		// Copy otherwise.
+		byte[] buffer = new byte[(int)size];
+		long initialPosition = Stream.Position;
+		Stream.Position = offset;
+		Stream.ReadExactly(buffer);
+		Stream.Position = initialPosition;
+		return SmartStream.CreateMemory(buffer);
 	}
 
 	public override void Flush()

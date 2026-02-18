@@ -1,6 +1,6 @@
 using AssetRipper.Assets;
+using AssetRipper.Export.Configuration;
 using AssetRipper.Export.Modules.Textures;
-using AssetRipper.Export.UnityProjects.Configuration;
 using AssetRipper.Import.Logging;
 using AssetRipper.Processing.Textures;
 using AssetRipper.SourceGenerated.Classes.ClassID_213;
@@ -15,7 +15,7 @@ public class TextureAssetExporter : BinaryAssetExporter
 	private SpriteExportMode SpriteExportMode { get; set; }
 	private bool ExportSprites => SpriteExportMode is not SpriteExportMode.Yaml;
 
-	public TextureAssetExporter(LibraryConfiguration configuration)
+	public TextureAssetExporter(FullConfiguration configuration)
 	{
 		ImageExportFormat = configuration.ExportSettings.ImageExportFormat;
 		SpriteExportMode = configuration.ExportSettings.SpriteExportMode;

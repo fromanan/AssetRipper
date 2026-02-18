@@ -55,7 +55,7 @@ internal static class Program
 	try
 #endif
 		{
-			FileBase file = SchemeReader.LoadFile(fullName);
+			FileBase file = SchemeReader.LoadFile(fullName, LocalFileSystem.Instance);
 			if (file is SerializedFile serializedFile)
 			{
 				GameBundle bundle = new();
@@ -101,7 +101,7 @@ internal static class Program
 					? FileSystem.FixInvalidFileNameCharacters(originalName)
 					: $"{texture.ClassName}_{ToValidString(texture.PathID)}";
 				Debug.Assert(name.Length > 0);
-				string uniqueName = FileSystem.GetUniqueName(collectionOutputPath, name, FileSystem.MaxFileNameLength - jsonExtension.Length);
+				string uniqueName = LocalFileSystem.Instance.GetUniqueName(collectionOutputPath, name, FileSystem.MaxFileNameLength - jsonExtension.Length);
 				string dataFilePath = Path.Join(collectionOutputPath, uniqueName);
 				string infoFilePath = dataFilePath + jsonExtension;
 				File.WriteAllBytes(dataFilePath, data);

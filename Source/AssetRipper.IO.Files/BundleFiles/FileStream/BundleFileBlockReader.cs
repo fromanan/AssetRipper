@@ -8,7 +8,7 @@ namespace AssetRipper.IO.Files.BundleFiles.FileStream;
 
 internal sealed class BundleFileBlockReader : IDisposable
 {
-	public BundleFileBlockReader(Stream stream, BlocksInfo blocksInfo)
+	public BundleFileBlockReader(SmartStream stream, BlocksInfo blocksInfo)
 	{
 		m_stream = stream;
 		m_blocksInfo = blocksInfo;
@@ -29,6 +29,16 @@ internal sealed class BundleFileBlockReader : IDisposable
 	public SmartStream ReadEntry(FileStreamNode entry)
 	{
 		ObjectDisposedException.ThrowIf(m_isDisposed, typeof(BundleFileBlockReader));
+
+		// Avoid storing entire non-compresed entries in memory by mapping a stream to the block location.
+		if (m_blocksInfo.StorageBlocks.Length == 1 && m_blocksInfo.StorageBlocks[0].CompressionType == CompressionType.None)
+		{
+			if (m_dataOffset + entry.Offset + entry.Size > m_stream.Length)
+			{
+				throw new InvalidFormatException("Entry extends beyond the end of the stream.");
+			}
+			return m_stream.CreatePartial(m_dataOffset + entry.Offset, entry.Size);
+		}
 
 		// find block offsets
 		int blockIndex;
@@ -127,6 +137,10 @@ internal sealed class BundleFileBlockReader : IDisposable
 			entryOffsetInsideBlock = 0;
 
 			long size = Math.Min(blockSize, left);
+			if (blockStream.Position + size > blockStream.Length)
+			{
+				throw new InvalidFormatException("Block extends beyond the end of the stream.");
+			}
 			using PartialStream partialStream = new(blockStream, blockStream.Position, size);
 			partialStream.CopyTo(entryStream);
 			blockIndex++;
@@ -178,20 +192,22 @@ internal sealed class BundleFileBlockReader : IDisposable
 	}
 
 	/// <summary>
-	/// The arbitrary maximum size of a decompressed stream to be stored in RAM. 2 GB
+	/// The arbitrary maximum size of a decompressed stream to be stored in RAM. 50 MB
 	/// </summary>
 	/// <remarks>
 	/// This number can be set to any integer value, including <see cref="int.MaxValue"/>.
+	/// Previously, this was actually set to <see cref="int.MaxValue"/>, but that can cause
+	/// <see href="https://github.com/AssetRipper/AssetRipper/issues/1953">highly compressed games to use too much RAM</see>.
 	/// </remarks>
-	private const int MaxMemoryStreamLength = int.MaxValue;
+	private const int MaxMemoryStreamLength = 50 * 1024 * 1024;
 	/// <summary>
-	/// The arbitrary maximum size of a decompressed stream to be pre-allocated. 100 MB
+	/// The arbitrary maximum size of a decompressed stream to be pre-allocated. 30 MB
 	/// </summary>
 	/// <remarks>
 	/// This number can be set to any integer value less than <see cref="MaxMemoryStreamLength"/>.
 	/// </remarks>
-	private const int MaxPreAllocatedMemoryStreamLength = 100 * 1024 * 1024;
-	private readonly Stream m_stream;
+	private const int MaxPreAllocatedMemoryStreamLength = 30 * 1024 * 1024;
+	private readonly SmartStream m_stream;
 	private readonly BlocksInfo m_blocksInfo = new();
 	private readonly long m_dataOffset;
 

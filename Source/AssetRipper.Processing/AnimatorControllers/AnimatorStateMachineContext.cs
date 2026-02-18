@@ -19,6 +19,7 @@ using AssetRipper.SourceGenerated.Subclasses.SelectorTransitionConstant;
 using AssetRipper.SourceGenerated.Subclasses.StateConstant;
 using AssetRipper.SourceGenerated.Subclasses.StateMachineConstant;
 using AssetRipper.SourceGenerated.Subclasses.TransitionConstant;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace AssetRipper.Processing.AnimatorControllers;
@@ -248,7 +249,7 @@ internal sealed class AnimatorStateMachineContext
 			// assuming SelectorStateConstantArray follows the sequence: [Entry1, Exit1, Entry2, Exit2, ...]
 			// just in case, next code can handle StateMachines missing Entry or Exit SelectorStateConstant
 			int stateMachineIndex = 0;
-			uint lastFullPathID = 0;
+			uint? lastFullPathID = null;
 			foreach (SelectorStateConstant ssc in StateMachineConstant.SelectorStateConstantArray)
 			{
 				SelectorTransitionConstant[]? transitions = ssc.TransitionConstantArray.Count == 0 ? null :
@@ -347,6 +348,8 @@ internal sealed class AnimatorStateMachineContext
 				}
 			}
 		}
+
+		Debug.Assert(IndexedStateMachines.Select(x => x.StateMachine).Distinct().Count() == IndexedStateMachines.Length);
 	}
 
 	private void AddStateAndTransitionsToStateMachine(int parentStateMachineIndex, int stateIndex)
@@ -371,7 +374,8 @@ internal sealed class AnimatorStateMachineContext
 		AssetList<PPtr_AnimatorStateTransition_4>? transitionList = null;
 		if (state.Has_Transitions())
 		{
-			state.Transitions.Capacity = stateConstant.TransitionConstantArray.Count;
+			//Not sure if it's correct for the state transitions to be non-empty, but I encountered it in some files.
+			state.Transitions.Capacity = state.Transitions.Count + stateConstant.TransitionConstantArray.Count;
 		}
 		else if (parentStateMachine.Has_OrderedTransitions())
 		{
@@ -438,8 +442,7 @@ internal sealed class AnimatorStateMachineContext
 		return animatorStateTransition;
 	}
 
-	private bool TryGetDestinationState(uint destinationState,
-	out IAnimatorState? stateDestination, out int stateMachineDestinationIndex, out bool isEntryDestination)
+	private bool TryGetDestinationState(uint destinationState, out IAnimatorState? stateDestination, out int stateMachineDestinationIndex, out bool isEntryDestination)
 	{
 		stateDestination = null;
 		stateMachineDestinationIndex = -1;
@@ -454,6 +457,11 @@ internal sealed class AnimatorStateMachineContext
 			if (StateMachineConstant.Has_SelectorStateConstantArray())
 			{
 				uint stateIndex = destinationState % StateMachineTransitionFlag;
+				if (stateIndex >= StateMachineConstant.SelectorStateConstantArray.Count)
+				{
+					return false;
+				}
+
 				SelectorStateConstant selectorState = StateMachineConstant.SelectorStateConstantArray[(int)stateIndex].Data;
 				stateMachineDestinationIndex = GetStateMachineIndexForId(selectorState.FullPathID);
 				isEntryDestination = selectorState.IsEntry;

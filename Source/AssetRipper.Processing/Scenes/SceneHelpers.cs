@@ -11,29 +11,40 @@ using System.Text.RegularExpressions;
 
 namespace AssetRipper.Processing.Scenes;
 
-public static class SceneHelpers
+public static partial class SceneHelpers
 {
 	private const string AssetsName = "Assets/";
+	private const string LibaryPackageCacheName = "Library/PackageCache/";
 	private const string LevelName = "level";
 	private const string MainSceneName = "maindata";
 
-	private static readonly Regex s_sceneNameFormat = new Regex($"^{LevelName}(0|[1-9][0-9]*)$");
-
-	public static int FileNameToSceneIndex(string name, UnityVersion version)
+	public static bool TryGetFileNameToSceneIndex(string name, UnityVersion version, out int index)
 	{
 		if (HasMainData(version))
 		{
 			if (name == MainSceneName)
 			{
-				return 0;
+				index = 0;
+				return true;
 			}
 
-			return int.Parse(name.AsSpan(LevelName.Length)) + 1;
+			if (SceneNameFormat.IsMatch(name))
+			{
+				index = int.Parse(name.AsSpan(LevelName.Length)) + 1;
+				return true;
+			}
 		}
 		else
 		{
-			return int.Parse(name.AsSpan(LevelName.Length));
+			if (SceneNameFormat.IsMatch(name))
+			{
+				index = int.Parse(name.AsSpan(LevelName.Length));
+				return true;
+			}
 		}
+
+		index = -1;
+		return false;
 	}
 
 	/// <summary>
@@ -72,9 +83,8 @@ public static class SceneHelpers
 
 	public static bool TryGetScenePath(AssetCollection collection, [NotNullWhen(true)] IBuildSettings? buildSettings, [NotNullWhen(true)] out string? result)
 	{
-		if (buildSettings is not null && IsSceneName(collection.Name))
+		if (buildSettings is not null && TryGetFileNameToSceneIndex(collection.Name, collection.OriginalVersion, out int index))
 		{
-			int index = FileNameToSceneIndex(collection.Name, collection.Version);
 			if (index >= buildSettings.Scenes.Count)
 			{
 				//This can happen in the following situation:
@@ -87,9 +97,14 @@ public static class SceneHelpers
 				return false;
 			}
 			string scenePath = buildSettings.Scenes[index].String;
+			string extension = Path.GetExtension(scenePath);
 			if (scenePath.StartsWith(AssetsName, StringComparison.Ordinal))
 			{
-				string extension = Path.GetExtension(scenePath);
+				result = scenePath[..^extension.Length];
+				return true;
+			}
+			else if (scenePath.StartsWith(LibaryPackageCacheName, StringComparison.Ordinal))
+			{
 				result = scenePath[..^extension.Length];
 				return true;
 			}
@@ -97,9 +112,17 @@ public static class SceneHelpers
 			{
 				// pull/uTiny 617
 				// NOTE: absolute project path may contain Assets/ in its name so in this case we get incorrect scene path, but there is no way to bypass this issue
-				int assetIndex = scenePath.IndexOf(AssetsName);
-				string extension = Path.GetExtension(scenePath);
-				result = scenePath.Substring(assetIndex, scenePath.Length - assetIndex - extension.Length);
+				int startIndex = scenePath.IndexOf(AssetsName);
+				if (startIndex < 0)
+				{
+					startIndex = scenePath.IndexOf(LibaryPackageCacheName);
+				}
+				if (startIndex < 0)
+				{
+					result = null;
+					return false;
+				}
+				result = scenePath[startIndex..^extension.Length];
 				return true;
 			}
 			else if (scenePath.Length == 0)
@@ -139,5 +162,6 @@ public static class SceneHelpers
 		return false;
 	}
 
-	public static bool IsSceneName(string name) => name == MainSceneName || s_sceneNameFormat.IsMatch(name);
+	[GeneratedRegex("^level(0|([1-9][0-9]*))$")]
+	private static partial Regex SceneNameFormat { get; }
 }

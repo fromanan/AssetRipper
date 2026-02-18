@@ -1,5 +1,4 @@
-﻿using AssetRipper.Export.Modules.Shaders.IO;
-using AssetRipper.Export.UnityProjects.Configuration;
+﻿using AssetRipper.Export.Configuration;
 using AssetRipper.Processing;
 using System.Text;
 
@@ -7,7 +6,7 @@ namespace AssetRipper.Export.UnityProjects.Project;
 
 public sealed class ProjectVersionPostExporter : IPostExporter
 {
-	public void DoPostExport(GameData gameData, LibraryConfiguration settings, FileSystem fileSystem)
+	public void DoPostExport(GameData gameData, FullConfiguration settings, FileSystem fileSystem)
 	{
 		// Although Unity 4 and lower don't have this file, we leave it in anyway for user readibility.
 		SaveProjectVersion(settings.ProjectSettingsPath, settings.Version, fileSystem);

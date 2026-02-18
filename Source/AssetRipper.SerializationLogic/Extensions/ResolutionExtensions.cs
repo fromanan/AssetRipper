@@ -1,10 +1,10 @@
 namespace AssetRipper.SerializationLogic.Extensions;
 
-public static class ResolutionExtensions
+internal static class ResolutionExtensions
 {
 	public static TypeDefinition CheckedResolve(this ITypeDescriptor reference)
 	{
-		if (reference.Module == null)
+		if (reference.ContextModule == null)
 		{
 			throw new ResolutionException(reference);
 		}
@@ -19,7 +19,7 @@ public static class ResolutionExtensions
 
 	public static MethodDefinition CheckedResolve(this IMethodDefOrRef reference)
 	{
-		if (reference.Module == null)
+		if (reference.ContextModule == null)
 		{
 			throw new ResolutionException(reference);
 		}

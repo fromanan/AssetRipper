@@ -1,57 +1,11 @@
-﻿using AsmResolver.PE.DotNet.Metadata.Tables;
-using AssetRipper.Primitives;
-using AssetRipper.SerializationLogic.Extensions;
+﻿using AssetRipper.SerializationLogic.Extensions;
 using System.Diagnostics;
-using System.Numerics;
 using static AssetRipper.SerializationLogic.SerializableType;
 
 namespace AssetRipper.SerializationLogic;
 
-public readonly struct FieldSerializer(UnityVersion version)
+public readonly partial struct FieldSerializer
 {
-	/// <summary>
-	/// Not sure about the exact version boundary, structs are supposedly only serializable on 4.5.0 and greater.
-	/// </summary>
-	private bool IsStructSerializable { get; } = version.GreaterThanOrEquals(4, 5);
-	private bool IsInt8Serializable => IsInt16Serializable;
-	/// <summary>
-	/// Not sure about the exact version boundary, but int8, int16, uint16, and uint32 were added around 5.0.0.
-	/// </summary>
-	/// <remarks>
-	/// <see href="https://github.com/AssetRipper/AssetRipper/issues/1851"/>
-	/// </remarks>
-	private bool IsInt16Serializable { get; } = version.GreaterThanOrEquals(5);
-	private bool IsUInt32Serializable => IsInt16Serializable;
-	private bool IsCharSerializable => IsInt64Serializable;
-	/// <summary>
-	/// Not sure about the exact version boundary, but online references suggest that 2017 was the first version to support this.
-	/// </summary>
-	/// <remarks>
-	/// <see href="https://github.com/AssetRipper/AssetRipper/issues/647"/>
-	/// </remarks>
-	private bool IsInt64Serializable { get; } = version.GreaterThanOrEquals(2017);
-	/// <summary>
-	/// Prior to some unknown version, System.Collections.Generic.List`1 and UnityEngine.ExposedReference`1 were the only supported generic types.
-	/// </summary>
-	private bool IsGenericInstanceSerializable => true;
-
-	private bool WillUnitySerialize(FieldDefinition field, TypeSignature type)
-	{
-		return FieldSerializationLogic.WillUnitySerialize(field, type) && type switch
-		{
-			CorLibTypeSignature corLibType => corLibType.ElementType switch
-			{
-				ElementType.I1 => IsInt8Serializable,
-				ElementType.I2 or ElementType.U2 => IsInt16Serializable,
-				ElementType.U4 => IsUInt32Serializable,
-				ElementType.I8 or ElementType.U8 => IsInt64Serializable,
-				ElementType.Char => IsCharSerializable,
-				_ => true,
-			},
-			_ => true,
-		};
-	}
-
 	public bool TryCreateSerializableType(TypeDefinition typeDefinition,
 		[NotNullWhen(true)] out SerializableType? result,
 		[NotNullWhen(false)] out string? failureReason)
@@ -59,7 +13,8 @@ public readonly struct FieldSerializer(UnityVersion version)
 		return TryCreateSerializableType(typeDefinition, new(SignatureComparer.Default), out result, out failureReason);
 	}
 
-	public bool TryCreateSerializableType(TypeDefinition typeDefinition,
+	public bool TryCreateSerializableType(
+		TypeDefinition typeDefinition,
 		Dictionary<ITypeDefOrRef, SerializableType> typeCache,
 		[NotNullWhen(true)] out SerializableType? result,
 		[NotNullWhen(false)] out string? failureReason)
@@ -70,7 +25,32 @@ public readonly struct FieldSerializer(UnityVersion version)
 		return returnValue;
 	}
 
-	private bool TryCreateSerializableType(TypeDefinition typeDefinition,
+	private bool TryCreateSerializableType(
+		TypeSignature typeSignature,
+		Dictionary<ITypeDefOrRef, SerializableType> typeCache,
+		Stack<MonoType> typeStack,
+		[NotNullWhen(true)] out SerializableType? result,
+		[NotNullWhen(false)] out string? failureReason)
+	{
+		if (typeSignature is GenericInstanceTypeSignature genericInstanceType)
+		{
+			return TryCreateSerializableType(genericInstanceType, typeCache, typeStack, out result, out failureReason);
+		}
+		TypeDefinition? typeDefinition = typeSignature.Resolve();
+		if (typeDefinition is null)
+		{
+			result = null;
+			failureReason = $"Failed to resolve type signature {typeSignature.FullName}.";
+			return false;
+		}
+		else
+		{
+			return TryCreateSerializableType(typeDefinition, typeCache, typeStack, out result, out failureReason);
+		}
+	}
+
+	private bool TryCreateSerializableType(
+		TypeDefinition typeDefinition,
 		Dictionary<ITypeDefOrRef, SerializableType> typeCache,
 		Stack<MonoType> typeStack,
 		[NotNullWhen(true)] out SerializableType? result,
@@ -97,14 +77,34 @@ public readonly struct FieldSerializer(UnityVersion version)
 		}
 
 		//Ensure we allocate some initial space so that we have less chance of needing to resize the list.
-		List<Field> fields = new(RoundUpToPowerOf2(typeDefinition.Fields.Count));
+		List<Field> fields = [];
 
 		//Caching before completion prevents infinite loops.
 		MonoType monoType = new(typeDefinition, fields);
 		typeCache.Add(typeDefinition, monoType);
 		typeStack.Push(monoType);
 
-		if (TryCreateSerializableFields(typeStack, monoType, fields, FieldQuery.GetFieldsInTypeAndBase(typeDefinition), typeCache, out failureReason))
+		if (typeDefinition.BaseType is not null)
+		{
+			if (!TryCreateSerializableType(typeDefinition.BaseType.ToTypeSignature(), typeCache, typeStack, out SerializableType? baseType, out failureReason))
+			{
+				typeCache.Remove(typeDefinition);
+				typeStack.Pop();
+				result = null;
+				return false;
+			}
+			else
+			{
+				fields.EnsureCapacity(baseType.Fields.Count + typeDefinition.Fields.Count);
+				fields.AddRange(baseType.Fields);
+			}
+		}
+		else
+		{
+			fields.EnsureCapacity(typeDefinition.Fields.Count);
+		}
+
+		if (TryCreateSerializableFields(typeStack, monoType, fields, GetFieldsInType(typeDefinition), typeCache, out failureReason))
 		{
 			monoType.SetDepth();
 			typeStack.Pop();
@@ -127,13 +127,49 @@ public readonly struct FieldSerializer(UnityVersion version)
 		[NotNullWhen(true)] out SerializableType? result,
 		[NotNullWhen(false)] out string? failureReason)
 	{
-		List<Field> fields = new();
+		ITypeDefOrRef typeCacheKey = genericInst.ToTypeDefOrRef();
+		if (typeCache.TryGetValue(typeCacheKey, out SerializableType? cachedType))
+		{
+			result = cachedType;
+			failureReason = null;
+			return true;
+		}
+
+		List<Field> fields = [];
 
 		MonoType monoType = new(genericInst.GenericType, fields);
-		typeCache.Add(genericInst.ToTypeDefOrRef(), monoType);
+		typeCache.Add(typeCacheKey, monoType);
 		typeStack.Push(monoType);
 
-		if (TryCreateSerializableFields(typeStack, monoType, fields, FieldQuery.GetFieldsInTypeAndBase(genericInst), typeCache, out failureReason))
+		if (!TryGetBaseType(genericInst, out TypeSignature? baseType))
+		{
+			typeCache.Remove(typeCacheKey);
+			typeStack.Pop();
+			result = null;
+			failureReason = $"Failed to resolve base type of {genericInst.FullName}.";
+			return false;
+		}
+		else if (baseType is not null)
+		{
+			if (!TryCreateSerializableType(baseType, typeCache, typeStack, out SerializableType? baseMonoType, out failureReason))
+			{
+				typeCache.Remove(typeCacheKey);
+				typeStack.Pop();
+				result = null;
+				return false;
+			}
+			else
+			{
+				fields.EnsureCapacity(baseMonoType.Fields.Count + genericInst.GenericType.Resolve()!.Fields.Count);
+				fields.AddRange(baseMonoType.Fields);
+			}
+		}
+		else
+		{
+			fields.EnsureCapacity(genericInst.GenericType.Resolve()!.Fields.Count);
+		}
+
+		if (TryCreateSerializableFields(typeStack, monoType, fields, GetFieldsInType(genericInst), typeCache, out failureReason))
 		{
 			monoType.SetDepth();
 			typeStack.Pop();
@@ -142,7 +178,7 @@ public readonly struct FieldSerializer(UnityVersion version)
 		}
 		else
 		{
-			typeCache.Remove(genericInst.ToTypeDefOrRef());
+			typeCache.Remove(typeCacheKey);
 			typeStack.Pop();
 			result = null;
 			return false;
@@ -157,16 +193,30 @@ public readonly struct FieldSerializer(UnityVersion version)
 		Dictionary<ITypeDefOrRef, SerializableType> typeCache,
 		[NotNullWhen(false)] out string? failureReason)
 	{
-		foreach ((FieldDefinition fieldDefinition, TypeSignature fieldType) in enumerable)
+		foreach ((FieldDefinition, TypeSignature) pair in enumerable)
 		{
+			(FieldDefinition fieldDefinition, TypeSignature fieldType) = pair;
 			if (WillUnitySerialize(fieldDefinition, fieldType))
 			{
-				if (FieldSerializationLogic.HasSerializeReferenceAttribute(fieldDefinition))
+				if (fieldDefinition.HasSerializeReferenceAttribute())
 				{
 					failureReason = $"{fieldDefinition.DeclaringType?.FullName}.{fieldDefinition.Name} uses the [SerializeReference] attribute, which is currently not supported.";
 					return false;
 				}
-				else if (TryCreateSerializableField(typeStack, fieldDefinition.Name ?? "", fieldType, 0, typeCache, out Field field, out failureReason))
+
+				int arrayDepth = 0;
+				if (fieldDefinition.HasFixedBufferAttribute())
+				{
+					fieldType = fieldDefinition.GetFixedBufferElementType();
+					arrayDepth = 1;
+				}
+
+				if (fieldType is CustomModifierTypeSignature customModifierType)
+				{
+					fieldType = customModifierType.BaseType;
+				}
+
+				if (TryCreateSerializableField(typeStack, fieldDefinition.Name ?? "", fieldType, arrayDepth, typeCache, out Field field, out failureReason))
 				{
 					if (monoType.IsCyclicReference(field.Type))
 					{
@@ -297,11 +347,41 @@ public readonly struct FieldSerializer(UnityVersion version)
 		}
 	}
 
-	private static int RoundUpToPowerOf2(int value)
+	private static bool TryGetBaseType(GenericInstanceTypeSignature genericInstanceType, out TypeSignature? baseType)
 	{
-		unchecked
+		TypeDefinition? typeDefinition = genericInstanceType.GenericType.Resolve();
+		if (typeDefinition is null)
 		{
-			return (int)BitOperations.RoundUpToPowerOf2((uint)value);
+			baseType = null;
+			return false;
 		}
+
+		baseType = typeDefinition.BaseType?.ToTypeSignature().InstantiateGenericTypes(new GenericContext(genericInstanceType, null));
+		return true;
+	}
+
+	private static IEnumerable<(FieldDefinition, TypeSignature)> GetFieldsInType(TypeDefinition typeDefinition)
+	{
+		return typeDefinition.Fields.Select(field =>
+		{
+			TypeSignature fieldType = field.Signature!.FieldType;
+			return (field, fieldType);
+		});
+	}
+
+	private static IEnumerable<(FieldDefinition, TypeSignature)> GetFieldsInType(GenericInstanceTypeSignature genericInst)
+	{
+		TypeDefinition? typeDefinition = genericInst.Resolve();
+		if (typeDefinition is null)
+		{
+			return [];
+		}
+		return typeDefinition.Fields.Select(field =>
+		{
+			TypeSignature fieldType = field.Signature!.FieldType;
+			GenericContext genericContext = new GenericContext(genericInst, null);
+			TypeSignature instanceTypeSignature = fieldType.InstantiateGenericTypes(genericContext);
+			return (field, instanceTypeSignature);
+		});
 	}
 }

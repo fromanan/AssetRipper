@@ -27,7 +27,11 @@ public static class ImporterFactory
 		instance.MipMaps.MipMapFadeDistanceStart = 1;
 		instance.MipMaps.MipMapFadeDistanceEnd = 3;
 		instance.BumpMap.HeightScale = .25f;
-		instance.GenerateCubemapE = TextureImporterGenerateCubemap.AutoCubemap;
+		instance.GenerateCubemapE = origin is ICubemap
+			? TextureImporterGenerateCubemap.FullCubemap
+			: instance.Has_TextureShape()
+				? TextureImporterGenerateCubemap.AutoCubemap
+				: TextureImporterGenerateCubemap.None;
 		instance.StreamingMipmaps = data.StreamingMipmaps ? 1 : 0;
 		instance.StreamingMipmapsPriority = data.StreamingMipmapsPriority;
 		instance.IsReadable = data.IsReadable ? 1 : 0;
@@ -52,7 +56,9 @@ public static class ImporterFactory
 		instance.AlphaUsageE = TextureImporterAlphaSource.FromInput;
 		instance.AlphaIsTransparency = 1;
 		instance.SpriteTessellationDetail = -1;
-		instance.TextureTypeE = data.TextureType;
+		instance.TextureTypeE = instance.Has_TextureShape() || origin is not ICubemap
+			? data.TextureType
+			: TextureImporterType.Advanced;
 		instance.TextureShapeE = data.TextureShape;
 
 		ITextureImporterPlatformSettings platformSettings = instance.PlatformSettings.AddNew();
@@ -101,7 +107,7 @@ public static class ImporterFactory
 			{
 				case ITexture2D texture2D:
 					{
-						EnableMipMap = texture2D.Has_MipCount_C28() && texture2D.MipCount_C28 > 1 || texture2D.Has_MipMap_C28() && texture2D.MipMap_C28;
+						EnableMipMap = texture2D.Mips;
 						SRGBTexture = texture2D.ColorSpace_C28E == ColorSpace.Linear;
 						StreamingMipmaps = texture2D.StreamingMipmaps_C28;
 						StreamingMipmapsPriority = texture2D.StreamingMipmapsPriority_C28;

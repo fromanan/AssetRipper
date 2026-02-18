@@ -1,6 +1,5 @@
 using AssetRipper.Assets;
 using AssetRipper.Assets.Collections;
-using AssetRipper.Export.Modules.Shaders.IO;
 using AssetRipper.IO.Files.SerializedFiles;
 using AssetRipper.SourceGenerated.Classes.ClassID_1102;
 using AssetRipper.SourceGenerated.Classes.ClassID_1107;
@@ -61,7 +60,7 @@ public abstract class ExportCollection : IExportCollection
 		}
 
 		string fullName = $"{name}.{GetExportExtension(asset)}";
-		string uniqueName = FileSystem.GetUniqueName(path, fullName, FileSystem.MaxFileNameLength - MetaExtension.Length);
+		string uniqueName = fileSystem.GetUniqueName(path, fullName, FileSystem.MaxFileNameLength - MetaExtension.Length);
 		string filePath = fileSystem.Path.Join(path, uniqueName);
 		AssetExporter.Export(container, asset, filePath, fileSystem);
 		Meta meta = new Meta(GUID, importer);
@@ -89,7 +88,7 @@ public abstract class ExportCollection : IExportCollection
 
 	protected static string GetUniqueFileName(string directoryPath, string fileName, FileSystem fileSystem)
 	{
-		return FileSystem.GetUniqueName(directoryPath, fileName, FileSystem.MaxFileNameLength - MetaExtension.Length);
+		return fileSystem.GetUniqueName(directoryPath, fileName, FileSystem.MaxFileNameLength - MetaExtension.Length);
 	}
 
 	protected virtual string GetExportExtension(IUnityObjectBase asset)

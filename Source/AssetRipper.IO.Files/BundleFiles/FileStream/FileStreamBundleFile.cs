@@ -17,9 +17,9 @@ public sealed class FileStreamBundleFile : FileContainer
 	{
 	}
 
-	public FileStreamBundleFile(string filePath)
+	public FileStreamBundleFile(string filePath, FileSystem fileSystem)
 	{
-		SmartStream stream = SmartStream.OpenRead(filePath);
+		SmartStream stream = SmartStream.OpenRead(filePath, fileSystem);
 		Read(stream);
 	}
 
@@ -136,7 +136,7 @@ public sealed class FileStreamBundleFile : FileContainer
 		}
 	}
 
-	private void ReadFileStreamData(Stream stream, long basePosition, long headerSize)
+	private void ReadFileStreamData(SmartStream stream, long basePosition, long headerSize)
 	{
 		if (Header.Flags.GetBlocksInfoAtTheEnd())
 		{

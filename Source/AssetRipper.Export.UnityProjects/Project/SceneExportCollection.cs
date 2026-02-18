@@ -19,9 +19,10 @@ public class SceneExportCollection : ExportCollection, IComparer<IUnityObjectBas
 		Hierarchy = hierarchy;
 		CurrentFile = Hierarchy.Collection;//Have to set it to something.
 
+		int index = 0;
 		foreach (IUnityObjectBase asset in Hierarchy.Assets)
 		{
-			m_exportIDs.Add(asset, asset.Collection is SerializedAssetCollection ? asset.PathID : ExportIdHandler.GetInternalId());
+			m_exportIDs.Add(asset, asset.Collection is SerializedAssetCollection ? asset.PathID : ExportIdHandler.GetPseudoRandomValue(index++));
 		}
 
 		componentArray = hierarchy.ExportableAssets.Order(this).ToArray();
@@ -111,9 +112,8 @@ public class SceneExportCollection : ExportCollection, IComparer<IUnityObjectBas
 
 	private bool IsSceneDuplicate(IExportContainer container)
 	{
-		if (SceneHelpers.IsSceneName(File.Name))
+		if (SceneHelpers.TryGetFileNameToSceneIndex(File.Name, File.OriginalVersion, out int index))
 		{
-			int index = SceneHelpers.FileNameToSceneIndex(File.Name, File.Version);
 			return container.IsSceneDuplicate(index);
 		}
 		return false;
