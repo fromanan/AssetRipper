@@ -2,7 +2,7 @@
 
 namespace AssetRipper.IO.Files.SerializedFiles.Parser;
 
-public abstract class SerializedTypeBase
+public abstract partial class SerializedTypeBase
 {
 	public int TypeID
 	{
@@ -33,20 +33,17 @@ public abstract class SerializedTypeBase
 	public int RawTypeID { get; set; }
 	public bool IsStrippedType { get; set; }
 	/// <summary>
-	/// For <see cref="ClassIDType.MonoBehaviour"/> specifies script type
+	/// For MonoBehaviour, this specifies script type
 	/// </summary>
 	public short ScriptTypeIndex { get; set; }
 	/// <summary>
 	/// The type of the class.
 	/// </summary>
 	public TypeTrees.TypeTree OldType { get; } = new();
-	/// <summary>
-	/// Hash128
-	/// </summary>
-	public byte[] ScriptID { get; set; } = Array.Empty<byte>();
-	public byte[] OldTypeHash { get; set; } = Array.Empty<byte>();
+	public Hash128 ScriptID { get; set; }
+	public Hash128 OldTypeHash { get; set; }
 
-	public void Read(SerializedReader reader, bool hasTypeTree)
+	internal void Read(SerializedReader reader, bool hasTypeTree)
 	{
 		RawTypeID = reader.ReadInt32();
 		int typeIdLocal;
@@ -74,9 +71,9 @@ public abstract class SerializedTypeBase
 				|| (!IgnoreScriptTypeForHash(reader.Generation, reader.Version) && ScriptTypeIndex >= 0);
 			if (readScriptID)
 			{
-				ScriptID = reader.ReadBytes(16);//actually read as 4 uint
+				ScriptID = Hash128.Read(reader);
 			}
-			OldTypeHash = reader.ReadBytes(16);//actually read as 4 uint
+			OldTypeHash = Hash128.Read(reader);
 		}
 
 		if (hasTypeTree)
@@ -93,39 +90,39 @@ public abstract class SerializedTypeBase
 		}
 	}
 
-	protected abstract void ReadTypeDependencies(SerializedReader reader);
+	private protected abstract void ReadTypeDependencies(SerializedReader reader);
 
 	protected abstract bool IgnoreScriptTypeForHash(FormatVersion formatVersion, UnityVersion unityVersion);
 
-	protected abstract void WriteTypeDependencies(SerializedWriter writer);
+	private protected abstract void WriteTypeDependencies(SerializedWriter writer);
 
-	public void Write(SerializedWriter writer, bool hasTypeTree)
+	internal void Write(SerializedWriter writer, bool hasTypeTree)
 	{
 		writer.Write(RawTypeID);
-		if (writer.Generation >= FormatVersion.RefactoredClassId)
+		if (HasIsStrippedType(writer.Generation))
 		{
 			writer.Write(IsStrippedType);
 		}
-		if (writer.Generation >= FormatVersion.RefactorTypeData)
+		if (HasScriptTypeIndex(writer.Generation))
 		{
 			writer.Write(ScriptTypeIndex);
 		}
-		if (writer.Generation >= FormatVersion.HasTypeTreeHashes)
+		if (HasHash(writer.Generation))
 		{
 			bool writeScriptID = (RawTypeID == -1)
 				|| (RawTypeID == 114)
 				|| (!IgnoreScriptTypeForHash(writer.Generation, writer.Version) && ScriptTypeIndex >= 0);
 			if (writeScriptID)
 			{
-				writer.Write(ScriptID);//actually written as 4 uint
+				ScriptID.Write(writer);
 			}
-			writer.Write(OldTypeHash);//actually written as 4 uint
+			OldTypeHash.Write(writer);
 		}
 
 		if (hasTypeTree)
 		{
 			OldType.Write(writer);
-			if (writer.Generation >= FormatVersion.StoresTypeDependencies)
+			if (HasTypeDependencies(writer.Generation))
 			{
 				WriteTypeDependencies(writer);
 			}

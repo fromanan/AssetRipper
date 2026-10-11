@@ -1,12 +1,11 @@
-﻿using AssetRipper.IO.Files.SerializedFiles.FileIdentifiers;
-using AssetRipper.IO.Files.SerializedFiles.IO;
+﻿using AssetRipper.IO.Files.SerializedFiles.IO;
 
 namespace AssetRipper.IO.Files.SerializedFiles.Parser;
 
 /// <summary>
 /// A serialized file may be linked with other serialized files to create shared dependencies.
 /// </summary>
-public struct FileIdentifier : ISerializedReadable, ISerializedWritable
+public struct FileIdentifier
 {
 	/// <summary>
 	/// 2.1.0 and greater
@@ -17,12 +16,12 @@ public struct FileIdentifier : ISerializedReadable, ISerializedWritable
 	/// </summary>
 	public static bool HasHash(FormatVersion generation) => generation >= FormatVersion.Unknown_5;
 
-	public bool IsFile(SerializedFile? file)
+	public readonly bool IsFile([NotNullWhen(true)] SerializedFile? file)
 	{
 		return file is not null && file.NameFixed == PathName;
 	}
 
-	public void Read(SerializedReader reader)
+	internal void Read(SerializedReader reader)
 	{
 		if (HasAssetPath(reader.Generation))
 		{
@@ -37,7 +36,7 @@ public struct FileIdentifier : ISerializedReadable, ISerializedWritable
 		PathName = SpecialFileNames.FixFileIdentifier(PathNameOrigin);
 	}
 
-	public readonly void Write(SerializedWriter writer)
+	internal readonly void Write(SerializedWriter writer)
 	{
 		if (HasAssetPath(writer.Generation))
 		{
@@ -78,7 +77,7 @@ public struct FileIdentifier : ISerializedReadable, ISerializedWritable
 	/// Virtual asset path. Used for cached files, otherwise it's empty.
 	/// The file with that path usually doesn't exist, so it's probably an alias.
 	/// </summary>
-	public string AssetPath { get; set; }
+	public Utf8String AssetPath { get; set; }
 	/// <summary>
 	/// The type of the file
 	/// </summary>

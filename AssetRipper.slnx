@@ -33,7 +33,6 @@
     <File Path="Source/Licenses/AssetStudio.md" />
     <File Path="Source/Licenses/Cpp2IL.md" />
     <File Path="Source/Licenses/Crunch.md" />
-    <File Path="Source/Licenses/darkfx.md" />
     <File Path="Source/Licenses/Fmod5Sharp.md" />
     <File Path="Source/Licenses/ILSpy.md" />
     <File Path="Source/Licenses/Lz4.md" />
@@ -71,6 +70,7 @@
   <Project Path="Source/AssetRipper.AssemblyDumper/AssetRipper.AssemblyDumper.csproj" />
   <Project Path="Source/AssetRipper.Assets.Tests/AssetRipper.Assets.Tests.csproj" />
   <Project Path="Source/AssetRipper.Assets/AssetRipper.Assets.csproj" />
+  <Project Path="Source/AssetRipper.Configuration/AssetRipper.Configuration.csproj" />
   <Project Path="Source/AssetRipper.DocExtraction.ConsoleApp/AssetRipper.DocExtraction.ConsoleApp.csproj" />
   <Project Path="Source/AssetRipper.DocExtraction/AssetRipper.DocExtraction.csproj" />
   <Project Path="Source/AssetRipper.Export.Modules.Audio/AssetRipper.Export.Modules.Audio.csproj" />
@@ -111,7 +111,5 @@
   <Project Path="Source/AssetRipper.Web/AssetRipper.Web.csproj" />
   <Project Path="Source/AssetRipper.Yaml.Tests/AssetRipper.Yaml.Tests.csproj" />
   <Project Path="Source/AssetRipper.Yaml/AssetRipper.Yaml.csproj" />
-  <Project Path="Source/Smolv/Smolv.csproj" />
-  <Project Path="Source/SpirV/SpirV.csproj" />
   <Project Path="Source/UnityEngine/UnityEngine.csproj" />
 </Solution>

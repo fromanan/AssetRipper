@@ -9,19 +9,22 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 20
     ignore:
       - dependency-name: "Microsoft.NET.ILLink.Tasks"
       - dependency-name: "Microsoft.DotNet.ILCompiler"
       - dependency-name: "Samboy063.Cpp2IL.Core"
+      - dependency-name: "AssetRipper.Cpp2IL.Core"
     groups:
-      nunit:
+      NUnit:
         patterns:
           - "NUnit*"
           - "Microsoft.NET.Test.Sdk"
           - "coverlet.collector"
-      asmresolver:
+      AsmResolver:
         patterns:
           - "AsmResolver.*"
+          - "AssetRipper.CIL"
 
   - package-ecosystem: "github-actions"
     # Workflow files stored in the

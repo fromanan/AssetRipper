@@ -17,6 +17,7 @@ using AssetRipper.SourceGenerated.Classes.ClassID_196;
 using AssetRipper.SourceGenerated.Classes.ClassID_218;
 using AssetRipper.SourceGenerated.Classes.ClassID_25;
 using AssetRipper.SourceGenerated.Classes.ClassID_30;
+using AssetRipper.SourceGenerated.Classes.ClassID_310;
 using AssetRipper.SourceGenerated.Classes.ClassID_320;
 using AssetRipper.SourceGenerated.Classes.ClassID_4;
 using AssetRipper.SourceGenerated.Classes.ClassID_43;
@@ -114,14 +115,8 @@ public class EditorFormatProcessor : IAssetProcessor
 			case IAnimationClip animationClip:
 				AnimationClipConverter.Process(animationClip, checksumCache!.Value);
 				break;
-			case IAssetBundle assetBundle:
-				OriginalPathHelper.SetOriginalPaths(assetBundle, bundledAssetsExportMode);
-				break;
 			case INavMeshSettings navMeshSettings:
 				navMeshSettings.ConvertToEditorFormat();
-				break;
-			case IResourceManager resourceManager:
-				OriginalPathHelper.SetOriginalPaths(resourceManager);
 				break;
 			case TypeTreeObject { IsPlayerSettings: true } playerSettings:
 				SerializableStructure editorStructure = playerSettings.EditorFields;
@@ -175,6 +170,11 @@ public class EditorFormatProcessor : IAssetProcessor
 			case IPlayableDirector playableDirector:
 				EditorFormatConverterAsync.Convert(playableDirector);
 				break;
+			case IAssetBundle assetBundle:
+				// PreloadTable is not used by AssetRipper and can be very large, so clear it to save memory and processing time.
+				assetBundle.PreloadTable.Clear();
+				assetBundle.PreloadTable.Capacity = 0;
+				break;
 			case IGraphicsSettings graphicsSettings:
 				graphicsSettings.ConvertToEditorFormat();
 				break;
@@ -189,6 +189,9 @@ public class EditorFormatProcessor : IAssetProcessor
 				break;
 			case ILightingSettings lightingSettings:
 				lightingSettings.ConvertToEditorFormat();
+				break;
+			case IUnityConnectSettings unityConnectSettings:
+				unityConnectSettings.ConvertToEditorFormat();
 				break;
 		}
 	}

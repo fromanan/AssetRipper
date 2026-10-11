@@ -49,7 +49,7 @@ public sealed class SerializedFileMetadata
 		bool swapEndianess = ReadSwapEndianess(stream, header);
 		EndianType endianess = swapEndianess ? EndianType.BigEndian : EndianType.LittleEndian;
 		using SerializedReader reader = new SerializedReader(stream, endianess, header.Version);
-		Read(reader);
+		Read(reader, header.DataOffset);
 	}
 
 	private bool ReadSwapEndianess(SmartStream stream, SerializedFileHeader header)
@@ -72,7 +72,7 @@ public sealed class SerializedFileMetadata
 		}
 	}
 
-	private void Read(SerializedReader reader)
+	private void Read(SerializedReader reader, long dataOffset)
 	{
 		if (HasSignature(reader.Generation))
 		{
@@ -99,15 +99,14 @@ public sealed class SerializedFileMetadata
 			LongFileID = reader.ReadUInt32();
 		}
 
-		//TODO: pass LongFileID to ObjectInfo
-		Object = reader.ReadSerializedArray<ObjectInfo>();
+		Object = reader.ReadObjectInfoArray(LongFileID != 0, Types, dataOffset);
 
 		if (HasScriptTypes(reader.Generation))
 		{
-			ScriptTypes = reader.ReadSerializedArray<LocalSerializedObjectIdentifier>();
+			ScriptTypes = reader.ReadLocalSerializedObjectIdentifierArray();
 		}
 
-		Externals = reader.ReadSerializedArray<FileIdentifier>();
+		Externals = reader.ReadFileIdentifierArray();
 
 		if (HasRefTypes(reader.Generation))
 		{
@@ -131,7 +130,7 @@ public sealed class SerializedFileMetadata
 		}
 	}
 
-	public void Write(SerializedWriter writer)
+	internal void Write(SerializedWriter writer)
 	{
 		if (HasEndian(writer.Generation))
 		{
@@ -150,18 +149,20 @@ public sealed class SerializedFileMetadata
 			writer.Write(EnableTypeTree);
 		}
 
-		writer.WriteSerializedTypeArray(Types, EnableTypeTree);
+		bool enableTypeTree = !HasEnableTypeTree(writer.Generation) || EnableTypeTree;
+		writer.WriteSerializedTypeArray(Types, enableTypeTree);
 		if (HasLongFileID(writer.Generation))
 		{
 			writer.Write(LongFileID);
 		}
 
-		writer.WriteSerializedArray(Object);
+		writer.WriteObjectInfoArray(Object);
+
 		if (HasScriptTypes(writer.Generation))
 		{
-			writer.WriteSerializedArray(ScriptTypes);
+			writer.WriteLocalSerializedObjectIdentifierArray(ScriptTypes);
 		}
-		writer.WriteSerializedArray(Externals);
+		writer.WriteFileIdentifierArray(Externals);
 		if (HasRefTypes(writer.Generation))
 		{
 			writer.WriteSerializedTypeArray(RefTypes, EnableTypeTree);
@@ -175,16 +176,16 @@ public sealed class SerializedFileMetadata
 	public UnityVersion UnityVersion { get; set; }
 	public BuildTarget TargetPlatform { get; set; }
 	public bool EnableTypeTree { get; set; }
-	public SerializedType[] Types { get; set; } = Array.Empty<SerializedType>();
+	public SerializedType[] Types { get; set; } = [];
 	/// <summary>
 	/// Indicate that <see cref="ObjectInfo.FileID"/> is 8 bytes size<br/>
 	/// Serialized files with this field enabled supposedly don't exist
 	/// </summary>
 	public uint LongFileID { get; set; }
 	public bool SwapEndianess { get; set; }
-	public ObjectInfo[] Object { get; set; } = Array.Empty<ObjectInfo>();
-	public LocalSerializedObjectIdentifier[] ScriptTypes { get; set; } = Array.Empty<LocalSerializedObjectIdentifier>();
-	public FileIdentifier[] Externals { get; set; } = Array.Empty<FileIdentifier>();
-	public string UserInformation { get; set; } = "";
-	public SerializedTypeReference[] RefTypes { get; set; } = Array.Empty<SerializedTypeReference>();
+	public ObjectInfo[] Object { get; set; } = [];
+	public LocalSerializedObjectIdentifier[] ScriptTypes { get; set; } = [];
+	public FileIdentifier[] Externals { get; set; } = [];
+	public Utf8String UserInformation { get; set; } = Utf8String.Empty;
+	public SerializedTypeReference[] RefTypes { get; set; } = [];
 }

@@ -10,7 +10,7 @@ using AssetRipper.GUI.Web.Pages.Search;
 using AssetRipper.GUI.Web.Pages.Settings;
 using AssetRipper.GUI.Web.Paths;
 using AssetRipper.Import.Logging;
-using AssetRipper.Import.Utils;
+using AssetRipper.IO.Files;
 using AssetRipper.Web.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -78,7 +78,7 @@ public static class WebApplicationLauncher
 		{
 			if (string.IsNullOrEmpty(logPath))
 			{
-				logPath = ExecutingDirectory.Combine($"AssetRipper_{DateTime.Now:yyyyMMdd_HHmmss}.log");
+				logPath = Path.Join(LocalFileSystem.ExecutingDirectory, $"AssetRipper_{DateTime.Now:yyyyMMdd_HHmmss}.log");
 				RotateLogs(logPath);
 			}
 			Logger.Add(new FileLogger(logPath));
@@ -385,7 +385,7 @@ public static class WebApplicationLauncher
 
 		FileInfo[] logFiles = new DirectoryInfo(directory)
 			.GetFiles("AssetRipper_*.log")
-			.OrderBy(f => f.Name)
+			.OrderBy(f => f.Name, StringComparer.Ordinal)
 			.ToArray();
 
 		for (int i = 0; i <= logFiles.Length - MaxLogFiles; i++)

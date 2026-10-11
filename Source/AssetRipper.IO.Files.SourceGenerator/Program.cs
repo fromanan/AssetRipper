@@ -8,9 +8,8 @@ internal static class Program
 	public const string SourceDirectory = "../../../../";
 	public const string GeneratorProjectDirectory = SourceDirectory + "AssetRipper.IO.Files.SourceGenerator/";
 	public const string OutputDirectory = SourceDirectory + "AssetRipper.IO.Files/";
-	static void Main(string[] args)
+	static void Main()
 	{
-		SerializedFileClassGenerator.GenerateSerializedFileClasses();
 		WriteFileSystemClass();
 		WriteLocalFileSystemClass();
 		WriteVirtualFileSystemClass();
@@ -50,7 +49,7 @@ internal static class Program
 					foreach (FileSystemApi api in classApiList)
 					{
 						// Inherit documentation from System.IO
-						writer.WriteLine($"/// <inheritdoc cref=\"{api.FullName}({api.ParametersWithoutNames})\"/>");
+						writer.WriteLine($"/// <inheritdoc cref=\"{api.FullName}({api.ParametersWithoutNames.Replace('<', '{').Replace('>', '}')})\"/>");
 
 						string virtualKeyword = api.Type is FileSystemApiType.Sealed ? "" : "virtual ";
 						writer.WriteLine($"public {virtualKeyword}{api.BaseReturnType} {api.Name}({api.ParametersWithTypes})");

@@ -1,5 +1,6 @@
 ﻿using AssetRipper.SourceGenerated.Classes.ClassID_30;
 using AssetRipper.SourceGenerated.NativeEnums.Global;
+using BuildTargetGroup = AssetRipper.SourceGenerated.Enums.BuildTargetGroup;
 using GraphicsTier = AssetRipper.SourceGenerated.Enums.GraphicsTier;
 using RenderingPath = AssetRipper.SourceGenerated.Enums.RenderingPath;
 
@@ -43,7 +44,7 @@ public static class GraphicsSettingsExtensions
 				settings.TierSettings.Capacity = 3;
 				settings.ShaderSettings_Tier1.ConvertToEditorFormat();
 				settings.ShaderSettings_Tier2.ConvertToEditorFormat();
-				settings.ShaderSettings_Tier2.ConvertToEditorFormat();
+				settings.ShaderSettings_Tier3.ConvertToEditorFormat();
 				settings.TierSettings.AddNew().ConvertToEditorFormat(settings.ShaderSettings_Tier1, settings.GetBuildTargetGroup(), GraphicsTier.Tier1);
 				settings.TierSettings.AddNew().ConvertToEditorFormat(settings.ShaderSettings_Tier2, settings.GetBuildTargetGroup(), GraphicsTier.Tier2);
 				settings.TierSettings.AddNew().ConvertToEditorFormat(settings.ShaderSettings_Tier3, settings.GetBuildTargetGroup(), GraphicsTier.Tier3);
@@ -59,7 +60,7 @@ public static class GraphicsSettingsExtensions
 
 	private static BuildTargetGroup GetBuildTargetGroup(this IGraphicsSettings settings)
 	{
-		return settings.Collection.Platform.PlatformToBuildGroup();
+		return BuildTargetGroup.FromBuildTarget(settings.Collection.Platform);
 	}
 
 	/// <summary>

@@ -3,10 +3,12 @@
 ## 1. Planned But Unscheduled
 
 ### 1.1 Import
+
 - **Script Import**
   - Use type trees for assembly reconstruction
 
 ### 1.2 Export
+
 - **Script Export**
   - Assembly renaming
 - **Miscellaneous Export**
@@ -15,12 +17,10 @@
   - SerializeFile writing as an alternative to yaml export
 
 ### 1.3 UI
+
 - **Improved Asset Previews**
   - Scene preview
   - Material preview
-
-### 1.4 Remove Native Dependencies
-- Replace crunch with managed code
 
 ---
 
@@ -29,6 +29,7 @@
 > **Note:** This is a collection of ideas that might not be desirable or feasible. Many of them may never be implemented. Do not interpret their inclusion as any form of commitment.
 
 ### 2.1 Import/Export Enhancements
+
 - **Asset Loading**
   - Extract assets and save to disk for lower RAM usage
 - **Audio Export**
@@ -43,12 +44,12 @@
   - Scripts
 
 ### 2.2 UI and User Experience
+
 - **GUI Quality of Life Features**
   - Preferences Window (Font setting, Configurable keybindings)
 - **Console**
   - Enterable commands
 - **Search Functionality**
-  - Dedicated search window
   - Tree View Search (Filters, Name filter, Rows limit, Result count, Group resources option)
 - **Tabs**
   - Inspector Tab (Tag, Layer, ID, File name, Asset Specific Properties)
@@ -56,6 +57,7 @@
   - Error Tab
 
 ### 2.3 Asset Management
+
 - **Asset Editing**
 - **Asset Bundle Construction**
   - Editing and Repacking of games and asset bundles
@@ -70,6 +72,7 @@
   - Node Dump
 
 ### 2.4 Asset Previews
+
 - **Meshes**
   - Colored semi-transparency
   - Triangle count
@@ -86,6 +89,7 @@
   - Scripts (view as text, notify if script missing)
 
 ### 2.5 Performance and Settings
+
 - **Import Settings**
   - Ignore scenes option
   - Import bundle as level
@@ -94,4 +98,5 @@
   - Asynchronous import/export
 
 ### 2.6 Miscellaneous
+
 - Find all references

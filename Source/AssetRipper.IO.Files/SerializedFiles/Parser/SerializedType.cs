@@ -2,9 +2,11 @@ using AssetRipper.IO.Files.SerializedFiles.IO;
 
 namespace AssetRipper.IO.Files.SerializedFiles.Parser;
 
-public sealed class SerializedType : SerializedTypeBase
+public sealed class SerializedType : SerializedTypeBase, IEquatable<SerializedType?>
 {
-	public int[] TypeDependencies { get; set; } = Array.Empty<int>();
+	private static UnityVersion WriteIDHashForScriptTypeVersion => new UnityVersion(2018, 3, 0, UnityVersionType.Alpha, 1);
+
+	public int[] TypeDependencies { get; set; } = [];
 
 	protected override bool IgnoreScriptTypeForHash(FormatVersion formatVersion, UnityVersion unityVersion)
 	{
@@ -13,15 +15,56 @@ public sealed class SerializedType : SerializedTypeBase
 		return !unityVersion.Equals(0, 0, 0) && unityVersion < WriteIDHashForScriptTypeVersion;
 	}
 
-	protected override void ReadTypeDependencies(SerializedReader reader)
+	private protected override void ReadTypeDependencies(SerializedReader reader)
 	{
 		TypeDependencies = reader.ReadInt32Array();
 	}
 
-	protected override void WriteTypeDependencies(SerializedWriter writer)
+	private protected override void WriteTypeDependencies(SerializedWriter writer)
 	{
 		writer.WriteArray(TypeDependencies);
 	}
 
-	private static UnityVersion WriteIDHashForScriptTypeVersion { get; } = new UnityVersion(2018, 3, 0, UnityVersionType.Alpha, 1);
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as SerializedType);
+	}
+
+	public bool Equals(SerializedType? other)
+	{
+		return other is not null
+			&& RawTypeID == other.RawTypeID
+			&& IsStrippedType == other.IsStrippedType
+			&& ScriptTypeIndex == other.ScriptTypeIndex
+			&& OldType.Equals(other.OldType)
+			&& ScriptID == other.ScriptID
+			&& OldTypeHash == other.OldTypeHash
+			&& TypeDependencies.AsSpan().SequenceEqual(other.TypeDependencies);
+	}
+
+	public override int GetHashCode()
+	{
+		HashCode hash = new();
+		hash.Add(RawTypeID);
+		hash.Add(IsStrippedType);
+		hash.Add(ScriptTypeIndex);
+		hash.Add(OldType);
+		hash.Add(ScriptID);
+		hash.Add(OldTypeHash);
+		foreach (int i in TypeDependencies)
+		{
+			hash.Add(i);
+		}
+		return hash.ToHashCode();
+	}
+
+	public static bool operator ==(SerializedType? left, SerializedType? right)
+	{
+		return EqualityComparer<SerializedType>.Default.Equals(left, right);
+	}
+
+	public static bool operator !=(SerializedType? left, SerializedType? right)
+	{
+		return !(left == right);
+	}
 }

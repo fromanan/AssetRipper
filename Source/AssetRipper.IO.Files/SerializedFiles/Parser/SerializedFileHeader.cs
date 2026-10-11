@@ -62,14 +62,14 @@ public sealed record class SerializedFileHeader
 
 		// Read generation first, the format changed hugely in gen 22 (unity 2020)
 		// Generation is always at [base + 0x8]
-		int generation = reader.ReadInt32();
-		if (!Enum.IsDefined(typeof(FormatVersion), generation))
+		FormatVersion generation = (FormatVersion)reader.ReadInt32();
+		if (!Enum.IsDefined(generation))
 		{
 			reader.BaseStream.Position = initialPosition;
 			return false;
 		}
 
-		if (generation >= 22)
+		if (generation >= FormatVersion.LargeFilesSupport)
 		{
 			//22 Format:
 			//First known value is at 0x14, and is metadata size as a 32-bit integer.
@@ -85,6 +85,12 @@ public sealed record class SerializedFileHeader
 			&& headerDefinedFileSize >= HeaderMinSize + MetadataMinSize
 			&& fileSize >= 0
 			&& headerDefinedFileSize == (ulong)fileSize;
+	}
+
+	public void Read(Stream stream)
+	{
+		using EndianReader reader = new(stream, EndianType.BigEndian);
+		Read(reader);
 	}
 
 	public void Read(EndianReader reader)
@@ -117,10 +123,16 @@ public sealed record class SerializedFileHeader
 			throw new Exception($"Invalid metadata size {MetadataSize}");
 		}
 
-		if (!Enum.IsDefined(typeof(FormatVersion), Version))
+		if (!Enum.IsDefined(Version))
 		{
 			throw new Exception($"Unsupported file generation {Version}'");
 		}
+	}
+
+	public void Write(Stream stream)
+	{
+		using EndianWriter writer = new(stream, EndianType.BigEndian);
+		Write(writer);
 	}
 
 	public void Write(EndianWriter writer)

@@ -1,7 +1,7 @@
 using AssetRipper.IO.Endian;
-using AssetRipper.IO.Files.Converters;
 using AssetRipper.IO.Files.SerializedFiles.IO;
 using AssetRipper.IO.Files.SerializedFiles.Parser;
+using AssetRipper.IO.Files.Streams;
 using AssetRipper.IO.Files.Streams.Smart;
 using System.Diagnostics;
 using System.Numerics;
@@ -63,6 +63,7 @@ public sealed class SerializedFile : FileBase
 	public ReadOnlySpan<LocalSerializedObjectIdentifier> ScriptTypes => m_scriptTypes;
 	public ReadOnlySpan<SerializedTypeReference> RefTypes => m_refTypes;
 	public bool HasTypeTree { get; private set; }
+	public Utf8String UserInformation { get; private set; } = Utf8String.Empty;
 
 	private static EndianType GetEndianType(SerializedFileHeader header, SerializedFileMetadata metadata)
 	{
@@ -76,6 +77,12 @@ public sealed class SerializedFile : FileBase
 		return SerializedFileHeader.IsSerializedFileHeader(reader, stream.Length);
 	}
 
+	public static bool IsSerializedFile(string filePath, FileSystem fileSystem)
+	{
+		using Stream stream = MultiFileStream.OpenRead(filePath, fileSystem);
+		return IsSerializedFile(stream);
+	}
+
 	public override string ToString()
 	{
 		return NameFixed;
@@ -84,27 +91,13 @@ public sealed class SerializedFile : FileBase
 	public override void Read(SmartStream stream)
 	{
 		SerializedFileHeader header = new();
-		using (EndianReader reader = new EndianReader(stream, EndianType.BigEndian))
-		{
-			header.Read(reader);
-		}
+		header.Read(stream);
 		if (SerializedFileMetadata.IsMetadataAtTheEnd(header.Version))
 		{
 			stream.Position = header.FileSize - header.MetadataSize;
 		}
 		SerializedFileMetadata metadata = new();
 		metadata.Read(stream, header);
-
-		SerializedFileMetadataConverter.CombineFormats(header.Version, metadata);
-
-		for (int i = 0; i < metadata.Object.Length; i++)
-		{
-			ref ObjectInfo objectInfo = ref metadata.Object[i];
-			stream.Position = header.DataOffset + objectInfo.ByteStart;
-			byte[] objectData = new byte[objectInfo.ByteSize];
-			stream.ReadExactly(objectData);
-			objectInfo.ObjectData = objectData;
-		}
 
 		SetProperties(header, metadata);
 	}
@@ -121,6 +114,7 @@ public sealed class SerializedFile : FileBase
 		m_scriptTypes = metadata.ScriptTypes;
 		m_refTypes = metadata.RefTypes;
 		HasTypeTree = metadata.EnableTypeTree;
+		UserInformation = metadata.UserInformation;
 	}
 
 	public override void Write(Stream stream)
@@ -131,19 +125,20 @@ public sealed class SerializedFile : FileBase
 			Version = Generation,
 			Endianess = EndianType == EndianType.BigEndian,
 		};
-		header.Write(new EndianWriter(stream, EndianType.BigEndian));
+		header.Write(stream);
 
 		using SerializedWriter writer = new(stream, EndianType, Generation, Version);
 		SerializedFileMetadata metadata = new()
 		{
 			UnityVersion = Version,
 			TargetPlatform = Platform,
-			Externals = m_dependencies ?? Array.Empty<FileIdentifier>(),
-			Object = GetNewObjectInfoArray(m_objects),
-			Types = m_types ?? Array.Empty<SerializedType>(),
-			ScriptTypes = m_scriptTypes ?? Array.Empty<LocalSerializedObjectIdentifier>(),
-			RefTypes = m_refTypes ?? Array.Empty<SerializedTypeReference>(),
+			Externals = m_dependencies ?? [],
+			Object = m_objects ?? [],
+			Types = m_types ?? [],
+			ScriptTypes = m_scriptTypes ?? [],
+			RefTypes = m_refTypes ?? [],
 			EnableTypeTree = HasTypeTree,
+			UserInformation = UserInformation,
 		};
 		long metadataPosition;
 		long metadataSize;
@@ -189,30 +184,6 @@ public sealed class SerializedFile : FileBase
 			}
 		}
 
-		static ObjectInfo[] GetNewObjectInfoArray(ObjectInfo[]? objects)
-		{
-			if (objects is null)
-			{
-				return Array.Empty<ObjectInfo>();
-			}
-
-			ObjectInfo[] newObjects = new ObjectInfo[objects.Length];
-			Array.Copy(objects, newObjects, objects.Length);
-
-			long byteStart = 0;
-			for (int i = 0; i < newObjects.Length; i++)
-			{
-				ref ObjectInfo objectInfo = ref newObjects[i];
-				objectInfo.ByteStart = byteStart;
-				objectInfo.ByteSize = objectInfo.ObjectData?.Length ?? 0;
-
-				byteStart += objectInfo.ByteSize;
-				byteStart += 8 - (byteStart % 8); // each object data must be aligned to 8 bytes
-			}
-
-			return newObjects;
-		}
-
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		static void AlignStream(SerializedWriter writer, [ConstantExpected] int alignment)
 		{
@@ -247,8 +218,10 @@ public sealed class SerializedFile : FileBase
 			m_dependencies = builder.Dependencies.ToArray(),
 			m_objects = builder.Objects.ToArray(),
 			m_types = builder.Types.ToArray(),
+			m_scriptTypes = builder.ScriptTypes.ToArray(),
 			m_refTypes = builder.RefTypes.ToArray(),
 			HasTypeTree = builder.HasTypeTree,
+			UserInformation = builder.UserInformation,
 		};
 	}
 }

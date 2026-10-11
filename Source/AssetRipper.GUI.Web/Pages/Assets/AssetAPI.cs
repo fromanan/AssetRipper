@@ -150,7 +150,7 @@ internal static class AssetAPI
 	{
 		if (context.Request.Query.TryGetValue(Extension, out extension))
 		{
-			return ImageExportFormatExtensions.TryGetFromExtension(extension, out format);
+			return ImageExportFormat.TryGetFromExtension(extension, out format);
 		}
 		else
 		{
@@ -367,7 +367,9 @@ internal static class AssetAPI
 
 		try
 		{
-			string text = new DefaultJsonWalker().SerializeStandard(asset);
+			StringWriter stringWriter = new(CultureInfo.InvariantCulture) { NewLine = "\n" };
+			asset.WalkStandard(new DefaultJsonWalker(stringWriter));
+			string text = stringWriter.ToString();
 			return Results.Text(text, "application/json").ExecuteAsync(context);
 		}
 		catch (Exception ex)
@@ -438,7 +440,7 @@ internal static class AssetAPI
 	{
 		return asset switch
 		{
-			IShader shader => DumpShaderDataAsText(shader),
+			IShader shader => shader.Has_Script() && !shader.Script.IsEmpty ? shader.Script : DumpShaderDataAsText(shader),
 			IMonoScript monoScript => DecompileMonoScript(monoScript),
 			ITextAsset textAsset => textAsset.Script_C49,
 			_ => "",

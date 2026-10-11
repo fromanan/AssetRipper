@@ -47,6 +47,9 @@ public static class Pass002_RenameSubnodes
 		{ "Float4" , Vector4FloatName },
 		{ "Fixed_bitset" , "FixedBitset" },
 		{ "GradientNEW" , "Gradient" },
+		{ "ProgramParameters" , "SerializedProgramParameters" },
+		{ "BufferBinding" , "BufferBindingParameter" },
+		{ "ConstantBufferParameter" , "ConstantBuffer" },
 	};
 
 	private static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> enumerable) where T : notnull
@@ -453,6 +456,14 @@ public static class Pass002_RenameSubnodes
 		{
 			node.TypeName = "ShaderVariantInfo";
 		}
+		else if (node.TypeName is "MatrixParameter" or "StructParameter" or "VectorParameter")
+		{
+			node.TryRenameSubNode("m_Index", "m_OffsetInConstantBuffer"); // Changed in Unity 6.6
+		}
+		else if (node.TypeName is "Binding")
+		{
+			node.TryRenameSubNode("m_Set", "m_EncodedData"); // m_Set was only used for a couple alpha versions
+		}
 		else if (node.TypeName == "Shader")
 		{
 			node.TryRenameSubNode("m_SubProgramBlob", "m_CompressedBlob");
@@ -636,20 +647,24 @@ public static class Pass002_RenameSubnodes
 			}
 		}
 
-		if (node.Name.StartsWith("m_Dst", StringComparison.Ordinal) && char.IsUpper(node.Name[5]))
+		if (node.Name.StartsWith("m_Dst", StringComparison.Ordinal) && node.Name.Length > 5 && char.IsUpper(node.Name[5]))
 		{
 			string suffix = node.Name.Substring(5);
 			node.Name = "m_Destination" + suffix;
 		}
-		else if (node.Name.StartsWith("m_Dest", StringComparison.Ordinal) && char.IsUpper(node.Name[6]))
+		else if (node.Name.StartsWith("m_Dest", StringComparison.Ordinal) && node.Name.Length > 6 && char.IsUpper(node.Name[6]))
 		{
 			string suffix = node.Name.Substring(6);
 			node.Name = "m_Destination" + suffix;
 		}
-		else if (node.Name.StartsWith("m_Src", StringComparison.Ordinal) && char.IsUpper(node.Name[5]))
+		else if (node.Name.StartsWith("m_Src", StringComparison.Ordinal) && node.Name.Length > 5 && char.IsUpper(node.Name[5]))
 		{
 			string suffix = node.Name.Substring(5);
 			node.Name = "m_Source" + suffix;
+		}
+		else if (node.Name == "m_Val")
+		{
+			node.Name = "m_Value";
 		}
 	}
 

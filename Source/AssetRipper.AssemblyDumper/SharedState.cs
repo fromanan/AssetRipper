@@ -43,7 +43,6 @@ internal sealed class SharedState : AssemblyBuilder
 	/// This is different from the original type tree data. In particular, it removes unnecessary types and moves versions to the inferred boundaries.
 	/// </remarks>
 	public byte[] TpkData { get; }
-	public UniversalCommonString CommonString { get; }
 	public HistoryFile HistoryFile { get; }
 	public Dictionary<int, VersionedList<UniversalClass>> ClassInformation { get; }
 	public Dictionary<string, VersionedList<UniversalClass>> SubclassInformation { get; } = new();
@@ -66,35 +65,13 @@ internal sealed class SharedState : AssemblyBuilder
 	public MethodDefinition NullableContextAttributeConstructor { get; }
 	public TypeDefinition PrivateImplementationDetails { get; }
 
-	private static readonly string referenceDirectory;
-
-	static SharedState()
-	{
-		referenceDirectory = "";
-		for (int i = 50; i >= 0; i--)
-		{
-			string path = @$"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.{i}\ref\net9.0\";
-			if (Directory.Exists(path))
-			{
-				referenceDirectory = path;
-				break;
-			}
-		}
-		if (referenceDirectory.Length == 0)
-		{
-			throw new InvalidOperationException(".NET reference directory could not be found");
-		}
-	}
-
 	private SharedState(
 		UnityVersion[] sourceVersions,
 		Dictionary<int, VersionedList<UniversalClass>> classes,
-		UniversalCommonString commonString,
 		byte[] tpkData)
-		: base(AssemblyName, new Version(0, 0, 0, 0), KnownCorLibs.SystemRuntime_v9_0_0_0)
+		: base(AssemblyName, new Version(0, 0, 0, 0), KnownCorLibs.SystemRuntime_v10_0_0_0)
 	{
 		SourceVersions = sourceVersions;
-		CommonString = commonString;
 		ClassInformation = classes;
 		TpkData = tpkData;
 		HistoryFile = HistoryFile.FromFile("consolidated.json");
@@ -124,46 +101,44 @@ internal sealed class SharedState : AssemblyBuilder
 	public static void Initialize(
 		UnityVersion[] sourceVersions,
 		Dictionary<int, VersionedList<UniversalClass>> classes,
-		UniversalCommonString commonString,
 		byte[] tpkData)
 	{
-		_instance = new SharedState(sourceVersions, classes, commonString, tpkData);
-		_instance.AddTargetFrameworkAttribute(".NET 9.0");
+		_instance = new SharedState(sourceVersions, classes, tpkData);
+		_instance.AddTargetFrameworkAttribute(".NET 10.0");
 		File.WriteAllBytes("processed.tpk", tpkData);
 	}
 
 	private void AddReferenceModules()
 	{
-		AddLocalReferenceModule("AssetRipper.Assets");
-		AddLocalReferenceModule("AssetRipper.IO.Endian");
-		AddLocalReferenceModule("AssetRipper.IO.Files");
-		AddLocalReferenceModule("AssetRipper.Numerics");
-		AddLocalReferenceModule("AssetRipper.Primitives");
 		AddSystemReferenceModule("System.Runtime");
 		AddSystemReferenceModule("System.Numerics.Vectors");
 		AddSystemReferenceModule("System.Linq");
 		AddSystemReferenceModule("System.Collections");
 		AddSystemReferenceModule("System.Text.Json");
 		AddSystemReferenceModule("System.Threading");
+		AddLocalReferenceModule("AssetRipper.Assets");
+		AddLocalReferenceModule("AssetRipper.IO.Endian");
+		AddLocalReferenceModule("AssetRipper.IO.Files");
+		AddLocalReferenceModule("AssetRipper.Numerics");
+		AddLocalReferenceModule("AssetRipper.Primitives");
 		AddLocalReferenceModule("AssetRipper.AssemblyDumper");//needed for member cloning
 	}
 
 	private void AddLocalReferenceModule(string name)
 	{
-		string path = Path.Combine(AppContext.BaseDirectory, $"{name}.dll"); ;
-		AddReferenceModule(path);
+		string path = Path.Join(AppContext.BaseDirectory, $"{name}.dll");
+		AssemblyDefinition assembly = AssemblyDefinition.FromFile(path, createRuntimeContext: false);
+		RuntimeContext.AddAssembly(assembly);
+		Importer.AddReferenceModule(assembly.ManifestModule!);
 	}
 
 	private void AddSystemReferenceModule(string name)
 	{
-		string path = $"{referenceDirectory}{name}.dll";
-		AddReferenceModule(path);
-	}
-
-	private void AddReferenceModule(string path)
-	{
-		ModuleDefinition module = ModuleDefinition.FromFile(path);
-		Importer.AddReferenceModule(module);
+		string fileName = $"{name}.dll";
+		byte[] imageData = Basic.Reference.Assemblies.Net100.ReferenceInfos.AllValues.First(t => t.FileName == fileName).ImageBytes;
+		AssemblyDefinition assembly = AssemblyDefinition.FromBytes(imageData, createRuntimeContext: false);
+		RuntimeContext.AddAssembly(assembly);
+		Importer.AddReferenceModule(assembly.ManifestModule!);
 	}
 
 	public static void Clear() => _instance = null;

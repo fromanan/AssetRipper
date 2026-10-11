@@ -5,7 +5,7 @@ namespace AssetRipper.IO.Files.SerializedFiles.Parser;
 /// <summary>
 /// Contains information for a block of raw serialized object data.
 /// </summary>
-public struct ObjectInfo : ISerializedReadable, ISerializedWritable
+public struct ObjectInfo
 {
 	/// <summary>
 	/// 5.0.0unk and greater / Format Version at least 14
@@ -22,17 +22,21 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 	/// <summary>
 	/// 5.0.0unk to 5.5.0unk exclusive / Format Version at least 11 but less than 17
 	/// </summary>
-	public static bool HasScriptID(FormatVersion generation) => generation >= FormatVersion.HasScriptTypeIndex && generation < FormatVersion.RefactorTypeData;
+	public static bool HasScriptTypeIndex(FormatVersion generation) => generation >= FormatVersion.HasScriptTypeIndex && generation < FormatVersion.RefactorTypeData;
 	/// <summary>
 	/// 5.0.1 to 5.5.0unk exclusive / Format Version at least 15 but less than 17
 	/// </summary>
 	public static bool HasStripped(FormatVersion generation) => generation >= FormatVersion.SupportsStrippedObject && generation < FormatVersion.RefactorTypeData;
 	/// <summary>
+	/// 5.5.0unk and greater / Format Version at least 17
+	/// </summary>
+	public static bool HasSerializedTypeIndex(FormatVersion generation) => generation >= FormatVersion.RefactorTypeData;
+	/// <summary>
 	/// 2020.1.0 and greater / Format Version at least 22
 	/// </summary>
 	public static bool HasLargeFilesSupport(FormatVersion generation) => generation >= FormatVersion.LargeFilesSupport;
 
-	public void Read(SerializedReader reader)
+	internal void Read(SerializedReader reader, bool longFileID, ReadOnlySpan<SerializedType> types, long dataOffset)
 	{
 		if (IsLongID(reader.Generation))
 		{
@@ -44,17 +48,33 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 			FileID = reader.ReadInt32();
 		}
 
+		/// <summary>
+		/// Offset to the object data.<br/>
+		/// Add to <see cref="SerializedFileHeader.DataOffset"/> to get the absolute offset within the serialized file.
+		/// </summary>
+		long byteStart;
 		if (HasLargeFilesSupport(reader.Generation))
 		{
-			ByteStart = reader.ReadInt64();
+			byteStart = reader.ReadInt64();
 		}
 		else
 		{
-			ByteStart = reader.ReadUInt32();
+			byteStart = reader.ReadUInt32();
 		}
 
-		ByteSize = reader.ReadInt32();
-		if (reader.Generation >= FormatVersion.RefactorTypeData)
+		// Size of the object data.
+		int byteSize = reader.ReadInt32();
+
+		// Read object data
+		{
+			long currentPosition = reader.BaseStream.Position;
+			long dataPosition = dataOffset + byteStart;
+			reader.BaseStream.Position = dataPosition;
+			ObjectData = reader.ReadBytes(byteSize);
+			reader.BaseStream.Position = currentPosition;
+		}
+
+		if (HasSerializedTypeIndex(reader.Generation))
 		{
 			SerializedTypeIndex = reader.ReadInt32();
 		}
@@ -67,7 +87,7 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 		{
 			ClassID = reader.ReadInt16();
 		}
-		if (HasScriptID(reader.Generation))
+		if (HasScriptTypeIndex(reader.Generation))
 		{
 			ScriptTypeIndex = reader.ReadInt16();
 		}
@@ -75,13 +95,37 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 		{
 			IsDestroyed = reader.ReadUInt16();
 		}
+		bool? stripped;
 		if (HasStripped(reader.Generation))
 		{
 			Stripped = reader.ReadBoolean();
+			stripped = Stripped;
+		}
+		else
+		{
+			Stripped = false;
+			stripped = null;
+		}
+		Type = GetSerializedType(types, stripped);
+		if (Type is not null)
+		{
+			TypeID = Type.TypeID;
+			if (!HasClassID(reader.Generation) && Type.TypeID >= short.MinValue && Type.TypeID <= short.MaxValue)
+			{
+				ClassID = (short)Type.TypeID;
+			}
+			if (!HasScriptTypeIndex(reader.Generation))
+			{
+				ScriptTypeIndex = Type.ScriptTypeIndex;
+			}
+			if (!HasStripped(reader.Generation))
+			{
+				Stripped = Type.IsStrippedType;
+			}
 		}
 	}
 
-	public readonly void Write(SerializedWriter writer)
+	internal readonly void Write(SerializedWriter writer, long byteStart)
 	{
 		if (IsLongID(writer.Generation))
 		{
@@ -95,15 +139,15 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 
 		if (HasLargeFilesSupport(writer.Generation))
 		{
-			writer.Write(ByteStart);
+			writer.Write(byteStart);
 		}
 		else
 		{
-			writer.Write((uint)ByteStart);
+			writer.Write((uint)byteStart);
 		}
 
-		writer.Write(ByteSize);
-		if (writer.Generation >= FormatVersion.RefactorTypeData)
+		writer.Write(ObjectData.Length);
+		if (HasSerializedTypeIndex(writer.Generation))
 		{
 			writer.Write(SerializedTypeIndex);
 		}
@@ -115,7 +159,7 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 		{
 			writer.Write(ClassID);
 		}
-		if (HasScriptID(writer.Generation))
+		if (HasScriptTypeIndex(writer.Generation))
 		{
 			writer.Write(ScriptTypeIndex);
 		}
@@ -134,7 +178,7 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 		return $"{ClassID}[{FileID}]";
 	}
 
-	public readonly SerializedType? GetSerializedType(ReadOnlySpan<SerializedType> types)
+	private readonly SerializedType? GetSerializedType(ReadOnlySpan<SerializedType> types, bool? stripped)
 	{
 		if (SerializedTypeIndex >= 0)
 		{
@@ -149,9 +193,13 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 			SerializedType? result = null;
 			foreach (SerializedType type in types)
 			{
-				if (type.TypeID == TypeID && type.IsStrippedType == Stripped)
+				if (type.TypeID == TypeID)
 				{
-					if (result is null)
+					if (stripped.HasValue && type.IsStrippedType != stripped.Value)
+					{
+						// If the caller specified a stripped value, skip types that don't match it.
+					}
+					else if (result is null)
 					{
 						result = type;
 					}
@@ -165,35 +213,11 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 		}
 	}
 
-	public void Initialize(ReadOnlySpan<SerializedType> types)
-	{
-		if (SerializedTypeIndex >= 0)
-		{
-			SerializedType type = types[SerializedTypeIndex];
-			TypeID = type.TypeID;
-			if (type.TypeID < short.MaxValue)
-			{
-				ClassID = (short)type.TypeID;
-			}
-			ScriptTypeIndex = type.ScriptTypeIndex;
-			Stripped = type.IsStrippedType;
-		}
-	}
-
 	/// <summary>
 	/// ObjectID<br/>
 	/// Unique ID that identifies the object. Can be used as a key for a map.
 	/// </summary>
 	public long FileID { get; set; }
-	/// <summary>
-	/// Offset to the object data.<br/>
-	/// Add to <see cref="SerializedFileHeader.DataOffset"/> to get the absolute offset within the serialized file.
-	/// </summary>
-	public long ByteStart { get; set; }
-	/// <summary>
-	/// Size of the object data.
-	/// </summary>
-	public int ByteSize { get; set; }
 	/// <summary>
 	/// Type ID of the object, which is mapped to <see cref="SerializedType.TypeID"/><br/>
 	/// Equals to classID if the object is not MonoBehaviour"/>
@@ -210,8 +234,69 @@ public struct ObjectInfo : ISerializedReadable, ISerializedWritable
 	public ushort IsDestroyed { get; set; }
 	public short ScriptTypeIndex { get; set; }
 	public bool Stripped { get; set; }
+	public SerializedType? Type { get; set; }
 	/// <summary>
-	/// The data referenced by <see cref="ByteStart"/> and <see cref="ByteSize"/>.
+	/// The data for the object.
 	/// </summary>
-	public byte[]? ObjectData { get; set; }
+	[AllowNull]
+	public byte[] ObjectData { readonly get => field ?? []; set; }
+
+	public ObjectInfo()
+	{
+	}
+
+	public ObjectInfo(SerializedType type)
+	{
+		Type = type;
+		TypeID = type.TypeID;
+		if (type.TypeID >= short.MinValue && type.TypeID <= short.MaxValue)
+		{
+			ClassID = (short)type.TypeID;
+		}
+		ScriptTypeIndex = type.ScriptTypeIndex;
+		Stripped = type.IsStrippedType;
+	}
+
+	public override readonly bool Equals([NotNullWhen(true)] object? obj)
+	{
+		return obj is ObjectInfo other && Equals(other);
+	}
+
+	public readonly bool Equals(ObjectInfo other)
+	{
+		return FileID == other.FileID
+			&& TypeID == other.TypeID
+			&& SerializedTypeIndex == other.SerializedTypeIndex
+			&& ClassID == other.ClassID
+			&& IsDestroyed == other.IsDestroyed
+			&& ScriptTypeIndex == other.ScriptTypeIndex
+			&& Stripped == other.Stripped
+			&& EqualityComparer<SerializedType>.Default.Equals(Type, other.Type)
+			&& ObjectData.AsSpan().SequenceEqual(other.ObjectData);
+	}
+
+	public override readonly int GetHashCode()
+	{
+		HashCode hash = new();
+		hash.Add(FileID);
+		hash.Add(TypeID);
+		hash.Add(SerializedTypeIndex);
+		hash.Add(ClassID);
+		hash.Add(IsDestroyed);
+		hash.Add(ScriptTypeIndex);
+		hash.Add(Stripped);
+		hash.Add(Type);
+		hash.AddBytes(ObjectData);
+		return hash.ToHashCode();
+	}
+
+	public static bool operator ==(ObjectInfo left, ObjectInfo right)
+	{
+		return left.Equals(right);
+	}
+
+	public static bool operator !=(ObjectInfo left, ObjectInfo right)
+	{
+		return !(left == right);
+	}
 }
